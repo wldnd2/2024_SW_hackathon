@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
 import Search from './pages/Search';
 import MyPage from './pages/MyPage';
+import StorePage from './pages/StorePage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Header from './components/Header';
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/detail/:id" element={<MatchingDetail />} />
         <Route path="/apply" element={<MatchingApply />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage/my-store" element={<StorePage />} /> {/* New route for store info */}
       </Routes>
     </Router>
   );
