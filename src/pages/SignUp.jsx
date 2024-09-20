@@ -1,7 +1,89 @@
-// SignUp.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/login_signup.css';
+import styled from 'styled-components';
+
+const Page = styled.div`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 500px;
+    padding: 0 20px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #F7F7F7;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+`;
+
+const TitleWrap = styled.div`
+    margin-top: 87px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #262626;
+`;
+
+const ContentWrap = styled.div`
+    margin-top: 26px;
+    flex: 1;
+`;
+
+const InputTitle = styled.div`
+    font-size: 12px;
+    font-weight: 600;
+    color: #262626;
+`;
+
+const InputWrap = styled.div`
+    display: flex;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    background-color: white;
+    border: 1px solid #e2e0e0;
+
+    &:focus-within {
+        border: 1px solid #9e30f4;
+    }
+`;
+
+const Input = styled.input`
+    width: 100%;
+    outline: none;
+    border: none;
+    height: 17px;
+    font-size: 14px;
+    font-weight: 400;
+
+    &::placeholder {
+        color: #dadada;
+    }
+`;
+
+const BottomButton = styled.button`
+    width: 100%;
+    height: 48px;
+    border: none;
+    font-weight: bold;
+    border-radius: 64px;
+    background-color: #30b3f4;
+    color: white;
+    margin-bottom: 16px;
+    cursor: pointer;
+
+    &:disabled {
+        background-color: #dadada;
+        color: white;
+    }
+`;
+
+const ErrorMessageWrap = styled.div`
+    margin-top: 8px;
+    color: #ef0000;
+    font-size: 12px;
+`;
 
 export default function SignUp() {
   const [name, setName] = useState('');
@@ -37,56 +119,55 @@ export default function SignUp() {
   };
 
   return (
-    <div className="page">
-      <div className="titleWrap">회원가입</div>
-      <div className="contentWrap">
-        <div className="inputTitle">이름</div>
-        <div className="inputWrap">
-          <input 
-          className="input" 
+    <Page>
+      <TitleWrap>회원가입</TitleWrap>
+      <ContentWrap>
+        <InputTitle>이름</InputTitle>
+        <InputWrap>
+          <Input 
           type="text" 
           placeholder="이름을 입력하세요" 
           value={name} 
           onChange={(e) => setName(e.target.value)}
           autoComplete="off" />
-        </div>
+        </InputWrap>
 
-        <div className="inputTitle">역할 선택</div>
-        <div className="inputWrap">
+        <InputTitle>역할 선택</InputTitle>
+        <InputWrap>
           <select className="input" value={role} onChange={(e) => setRole(e.target.value)}>
             <option value="상점">상점</option>
             <option value="크리에이터">로컬 크리에이터</option>
           </select>
-        </div>
+        </InputWrap>
 
-        <div className="inputTitle">이메일 주소</div>
-        <div className="inputWrap">
-          <input className="input" 
+        <InputTitle>이메일 주소</InputTitle>
+        <InputWrap>
+          <Input 
           type="text" 
           placeholder="test@gmail.com" 
           value={email} 
           onChange={handleEmail} 
           autoComplete="off" />
-        </div>
-        <div className="errorMessageWrap">{!emailValid && email.length > 0 && <div>올바른 이메일을 입력해주세요.</div>}</div>
+        </InputWrap>
+        <ErrorMessageWrap>{!emailValid && email.length > 0 && <div>올바른 이메일을 입력해주세요.</div>}</ErrorMessageWrap>
 
-        <div className="inputTitle">비밀번호</div>
-        <div className="inputWrap">
-          <input className="input" 
+        <InputTitle>비밀번호</InputTitle>
+        <InputWrap>
+          <Input 
           type="password" 
           placeholder="영문, 숫자, 특수문자 포함 8자 이상" 
           value={pw} 
           onChange={handlePw}
           autoComplete="off"  />
-        </div>
-        <div className="errorMessageWrap">{!pwValid && pw.length > 0 && <div>영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.</div>}</div>
-      </div>
+        </InputWrap>
+        <ErrorMessageWrap>{!pwValid && pw.length > 0 && <div>영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.</div>}</ErrorMessageWrap>
+      </ContentWrap>
 
       <div>
-        <button onClick={handleSignUp} disabled={!emailValid || !pwValid} className="bottomButton">
+        <BottomButton onClick={handleSignUp} disabled={!emailValid || !pwValid}>
           회원가입
-        </button>
+        </BottomButton>
       </div>
-    </div>
+    </Page>
   );
 }
