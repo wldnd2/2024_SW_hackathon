@@ -1,3 +1,6 @@
+import Inventory from './pages/Inventory';
+import CreatorInfo from './constants/CreatorInfo';
+import SanginInfo from './constants/SanginInfo';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
 import Search from './pages/Search';
@@ -10,6 +13,8 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/creator" element={<Inventory infomations={CreatorInfo} />} />
+        <Route path="/sangin" element={<Inventory infomations={SanginInfo} />} />
         <Route path="/search" element={<Search />} />
         <Route path="/mypage" element={<MyPage />} />
       </Routes>
