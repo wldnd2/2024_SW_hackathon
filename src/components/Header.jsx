@@ -73,6 +73,10 @@ const Header = () => {
           <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
           <StyledListItemText primary="Login" />
         </StyledListItem>
+        <StyledListItem button={true} component={Link} to="/" onClick={toggleDrawer(false)}>
+          <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
+          <StyledListItemText primary="Logout" />
+        </StyledListItem>
       </List>
     </StyledDrawerList>
   );
