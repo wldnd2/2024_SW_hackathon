@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams  } from 'react-router-dom';
-import '../index.css';
+import '../styles/index.css';
 
 export default function MatchingDetail() {
     const navigate = useNavigate();  // useNavigate 훅 사용

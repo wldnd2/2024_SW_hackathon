@@ -11,7 +11,7 @@ export default Search;
 */
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import '../index.css';
+import '../styles/index.css';
 
 export default function Search() {
   const [creators, setCreators] = useState([]);
