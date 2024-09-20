@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // useNavigate 추가
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -49,9 +49,16 @@ const FlexGrowDiv = styled.div`
 
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate(); // useNavigate 추가
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user'); // localStorage에서 사용자 정보 삭제
+    alert('로그아웃 되었습니다.');
+    navigate('/'); // 로그아웃 후 홈으로 이동
   };
 
   const DrawerList = (
@@ -73,7 +80,8 @@ const Header = () => {
           <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
           <StyledListItemText primary="Login" />
         </StyledListItem>
-        <StyledListItem button={true} component={Link} to="/" onClick={toggleDrawer(false)}>
+        {/* 로그아웃 버튼에 onClick 이벤트 추가 */}
+        <StyledListItem button={true} onClick={() => { handleLogout(); toggleDrawer(false)(); }}>
           <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
           <StyledListItemText primary="Logout" />
         </StyledListItem>
