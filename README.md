@@ -1,5 +1,15 @@
 # React + Vite
 
+### STATR
+```BASH
+# 폴더 다운로드
+git clone https://github.com/wldnd2/2024_SW_hackathon
+# 기존 라이브러리 설치
+yarn install
+# 웹 실행
+yarn dev
+```
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
