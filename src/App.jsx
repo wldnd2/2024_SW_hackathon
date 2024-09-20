@@ -6,6 +6,8 @@ import Home from './Pages/Home';
 import Search from './pages/Search';
 import MyPage from './pages/MyPage';
 import Header from './components/Header';
+import MatchingDetail from "./pages/MatchingDetail";
+import MatchingApply from "./pages/MatchingApply"; 
 
 const App = () => {
   return (
@@ -16,6 +18,8 @@ const App = () => {
         <Route path="/creator" element={<Inventory infomations={CreatorInfo} />} />
         <Route path="/sangin" element={<Inventory infomations={SanginInfo} />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/detail/:id" element={<MatchingDetail />} />
+        <Route path="/apply" element={<MatchingApply />} />
         <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </Router>
