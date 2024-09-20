@@ -13,8 +13,6 @@ const Page = styled.div`
     transform: translate(-50%, 0);
     background-color: #F7F7F7;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
 `;
 
 const TitleWrap = styled.div`
@@ -205,7 +203,7 @@ export default function Login() {
         <div className="underline"></div>
       </ContentWrap>
 
-      <div>
+      <div style={{ marginTop: "50px" }}>
         <BottomButton onClick={onClickConfirmButton} disabled={notAllow}>
           확인
         </BottomButton>
