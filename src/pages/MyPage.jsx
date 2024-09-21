@@ -62,18 +62,12 @@ export default function MyPage() {
     setNotAllow(!(nameValid && emailValid && phoneNValid));
   }, [nameValid, emailValid, phoneNValid]);
 
-  // 로컬 스토리지에서 사용자 정보 불러오기
-  // useEffect(() => {
-  //   const storedUser = JSON.parse(localStorage.getItem('user'));
-  //   if (storedUser) {
-  //     setName(storedUser.name);
-  //     setEmail(storedUser.email);
-  //     setEmailValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(storedUser.email)); // 이메일 로드 후 즉시 검증
-  //   }
-  // }, []);
-
   const renderContent = () => {
-    if (activePage === 'account' || user) {
+    if (!user) {
+      return <div>Loading...</div>; // user가 null일 때 로딩 메시지 표시
+    }
+
+    if (activePage === 'account') {
       return (
         <div className="profile-form">
           <h1>회원 정보</h1>
