@@ -179,6 +179,8 @@ export default function SignUp() {
       const createdUser = await createUserWithEmailAndPassword(auth, email, pw);
       console.log('회원가입 성공:', createdUser);
 
+      alert('회원가입 성공!');
+
       // auth.currentUser가 있는지 확인 후 프로필 업데이트
       if (auth.currentUser) {
         await updateProfile(auth.currentUser, {
