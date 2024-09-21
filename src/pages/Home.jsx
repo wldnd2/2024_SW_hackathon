@@ -20,7 +20,9 @@ const Footer = styled.footer`
   color: #fff;
   text-align: center;
   padding: 20px 0;
-  margin-top: auto;
+  width: 100%; /* Makes footer full width */
+  position: relative;
+  bottom: 0;
 `;
 
 const Home = () => {
