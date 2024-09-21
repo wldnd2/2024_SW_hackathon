@@ -1,30 +1,60 @@
-/*
-const Search = () => {
-  return (
-    <div>
-      <h1>Search</h1>
-    </div>
-  );
-}
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import { Typography, TextField, Select, MenuItem, Card, CardContent, CardMedia } from '@mui/material';
+import CreatorList from '../constants/CreatorList'; // 크리에이터 데이터 가져오기
+import CreatorModal from '../components/CreatorModal'; // CreatorModal 컴포넌트 가져오기
 
-export default Search;
-*/
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import '../styles/index.css';
+const Page = styled.div`
+  padding: 20px;
+`;
+
+const SearchWrap = styled.div`
+  margin-bottom: 20px;
+`;
+
+const FilterWrap = styled.div`
+  margin-bottom: 20px;
+`;
+
+const CreatorListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+`;
+
+const CreatorCard = styled(Card)`
+  width: calc(33.333% - 16px);
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const CardImageContainer = styled.div`
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+`;
+
+const NoResult = styled(Typography)`
+  text-align: center;
+  color: #999;
+  font-size: 18px;
+  margin-top: 20px;
+`;
 
 export default function Search() {
   const [creators, setCreators] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
+  const [selectedCreator, setSelectedCreator] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // 데이터 불러오기
   useEffect(() => {
-    // 데이터를 JSON 파일에서 불러오는 fetch 함수
-    fetch('/creators.json')
-      .then(response => response.json())
-      .then(data => setCreators(data))
-      .catch(error => console.error('Error fetching data:', error));
+    setCreators(CreatorList);
   }, []);
 
   // 검색 및 필터링된 크리에이터 목록
@@ -35,21 +65,21 @@ export default function Search() {
     );
   });
 
-  const navigate = useNavigate();  // useNavigate 훅 사용
-
   // 검색창 핸들러
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  // 각 크리에이터 카드 클릭 시 상세 페이지로 이동
-  const handleCardClick = (id) => {
-    navigate(`/detail/${id}`);
+  // 각 크리에이터 카드 클릭 시 모달 열기
+  const handleCardClick = (creator) => {
+    setSelectedCreator(creator);
+    setModalOpen(true);
   };
 
-  // 버튼 클릭 시 MatchingDetail으로 이동
-  const handleSubmit = () => {
-    navigate('/apply');  // '/detail' 경로로 이동
+  // 모달 닫기 핸들러
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedCreator(null);
   };
 
   // 아이템명 추출
@@ -59,69 +89,82 @@ export default function Search() {
   };
 
   return (
-    <div className="page">
-      <div className="titleWrap">
+    <Page>
+      <Typography variant="h4" component="div" gutterBottom>
         크리에이터 검색 및 필터링 페이지
-      </div>
+      </Typography>
 
       {/* 검색창 */}
-      <div className="searchWrap">
-        <input
-          type="text"
-          className="searchInput"
+      <SearchWrap>
+        <TextField
+          fullWidth
+          variant="outlined"
           placeholder="상점 이름을 검색하세요"
           value={searchTerm}
           onChange={handleSearch}
         />
-      </div>
+      </SearchWrap>
 
       {/* 필터 섹션 */}
-      <div className="filterWrap">
-        <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
-          <option value="">카테고리</option>
-          <option value="지역가치">지역가치</option>
-          <option value="로컬푸드">로컬푸드</option>
-          <option value="지역기반제조">지역기반제조</option>
-          <option value="디지털문화체험">디지털문화체험</option>
-        </select>
-      </div>
+      <FilterWrap>
+        <Select
+          fullWidth
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+          displayEmpty
+        >
+          <MenuItem value="">
+            <em>카테고리</em>
+          </MenuItem>
+          <MenuItem value="지역가치">지역가치</MenuItem>
+          <MenuItem value="로컬푸드">로컬푸드</MenuItem>
+          <MenuItem value="지역기반제조">지역기반제조</MenuItem>
+          <MenuItem value="디지털문화체험">디지털문화체험</MenuItem>
+        </Select>
+      </FilterWrap>
 
       {/* 크리에이터 목록을 카드 형식으로 표시 */}
-      <div className="creatorList">
+      <CreatorListContainer>
         {filteredCreators.length > 0 ? (
           filteredCreators.map((creator, index) => (
-            
-            <div 
-              className="creatorCard" 
+            <CreatorCard 
               key={index}
-              onClick={() => handleCardClick(creator.id)} // 카드 클릭 시 handleCardClick 호출
-              style={{ cursor: 'pointer' }} // 마우스 커서가 포인터로 바뀌도록 스타일 추가
+              onClick={() => handleCardClick(creator)} // 카드 클릭 시 handleCardClick 호출
             >
               {/* 이미지 */}
-              <div className="cardImageContainer">
-                <img src={creator.imageUrl} alt={creator.name} className="creatorImage" />
-              </div>
+              <CardImageContainer>
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={creator.imageUrl}
+                  alt={creator.name}
+                />
+              </CardImageContainer>
               
               {/* 내용 */}
-              <div className="cardContent">
-                <h3>{creator.name}</h3>
-                <p>{extractItemTitle(creator.item)}</p>
-                <p>분야: {creator.category}</p>
-                <p>지역: {creator.region} {creator.subregion}</p>
-              </div>
-            </div>
+              <CardContent>
+                <Typography variant="h6" component="div">
+                  {creator.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {extractItemTitle(creator.item)}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  분야: {creator.category}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  지역: {creator.region} {creator.subregion}
+                </Typography>
+              </CardContent>
+            </CreatorCard>
           ))
         ) : (
-          <div className="noResult">검색 결과가 없습니다.</div>
+          <NoResult>검색 결과가 없습니다.</NoResult>
         )}
-      </div>
-      <div className="bottomButtonWrap">
-          <button 
-            className='bottomButton' 
-            onClick={handleSubmit}>
-            다음
-          </button>
-        </div>
-    </div>
+      </CreatorListContainer>
+
+      {/* 모달 */}
+      <CreatorModal open={modalOpen} handleClose={handleCloseModal} creator={selectedCreator} />
+    </Page>
   );
 }

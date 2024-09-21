@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/MyPage.css'; // Include your CSS file for layout and styles
 import StorePage from './StorePage'; // Import the store page component
 import CreatorPage from './CreatorPage';
@@ -26,7 +26,7 @@ export default function MyPage() {
   const handleEmail = (e) => {
     setEmail(e.target.value);
     const regex =
-      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     setEmailValid(regex.test(email));
   };
 
