@@ -1,14 +1,3 @@
-/*
-const Search = () => {
-  return (
-    <div>
-      <h1>Search</h1>
-    </div>
-  );
-}
-
-export default Search;
-*/
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/index.css';
