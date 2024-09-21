@@ -17,8 +17,6 @@ export default function Search() {
   const [creators, setCreators] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
-  const [priceRangeFilter, setPriceRangeFilter] = useState('');
-  const [productionCapacityFilter, setProductionCapacityFilter] = useState('');
 
   // 데이터 불러오기
   useEffect(() => {
@@ -33,9 +31,7 @@ export default function Search() {
   const filteredCreators = creators.filter((creator) => {
     return (
       creator.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (!categoryFilter || creator.category === categoryFilter) &&
-      (!priceRangeFilter || creator.priceRange === priceRangeFilter) &&
-      (!productionCapacityFilter || creator.productionCapacity === productionCapacityFilter)
+      (!categoryFilter || creator.category === categoryFilter)
     );
   });
 
@@ -54,6 +50,12 @@ export default function Search() {
   // 버튼 클릭 시 MatchingDetail으로 이동
   const handleSubmit = () => {
     navigate('/apply');  // '/detail' 경로로 이동
+  };
+
+  // 아이템명 추출
+  const extractItemTitle = (item) => {
+    const match = item.match(/“([^“”]+)”/);
+    return match ? match[1] : item;  // "" 안의 텍스트를 추출, 없으면 전체 반환
   };
 
   return (
@@ -82,37 +84,31 @@ export default function Search() {
           <option value="지역기반제조">지역기반제조</option>
           <option value="디지털문화체험">디지털문화체험</option>
         </select>
-
-        <select value={priceRangeFilter} onChange={(e) => setPriceRangeFilter(e.target.value)}>
-          <option value="">가격대</option>
-          <option value="저가">저가</option>
-          <option value="중간">중간</option>
-          <option value="고가">고가</option>
-        </select>
-
-        <select value={productionCapacityFilter} onChange={(e) => setProductionCapacityFilter(e.target.value)}>
-          <option value="">생산 용량</option>
-          <option value="소규모">소규모</option>
-          <option value="대량">대량</option>
-        </select>
       </div>
 
       {/* 크리에이터 목록을 카드 형식으로 표시 */}
       <div className="creatorList">
         {filteredCreators.length > 0 ? (
           filteredCreators.map((creator, index) => (
+            
             <div 
               className="creatorCard" 
               key={index}
               onClick={() => handleCardClick(creator.id)} // 카드 클릭 시 handleCardClick 호출
               style={{ cursor: 'pointer' }} // 마우스 커서가 포인터로 바뀌도록 스타일 추가
             >
-              <h3>{creator.name}</h3>
-              <p>{creator.item}</p>
-              <p><a href={creator.homepage} target="_blank" rel="noopener noreferrer">{creator.homepage}</a></p>
-              <p>지역: {creator.region} {creator.subregion}</p>
-              <p>가격대: {creator.priceRange}</p>
-              <p>생산 용량: {creator.productionCapacity}</p>
+              {/* 이미지 */}
+              <div className="cardImageContainer">
+                <img src={creator.imageUrl} alt={creator.name} className="creatorImage" />
+              </div>
+              
+              {/* 내용 */}
+              <div className="cardContent">
+                <h3>{creator.name}</h3>
+                <p>{extractItemTitle(creator.item)}</p>
+                <p>분야: {creator.category}</p>
+                <p>지역: {creator.region} {creator.subregion}</p>
+              </div>
             </div>
           ))
         ) : (
