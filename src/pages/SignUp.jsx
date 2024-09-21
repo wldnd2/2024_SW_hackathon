@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from 'firebase/auth';
+import { ref, set } from 'firebase/database';
+
+import app, { db } from '../firebase';
 
 const Page = styled.div`
     position: absolute;
@@ -116,6 +124,8 @@ const KeywordButton = styled.button`
     }
 `;
 
+const auth = getAuth(app);
+
 export default function SignUp() {
   const [name, setName] = useState('');
   const [role, setRole] = useState('상인');
@@ -163,11 +173,16 @@ export default function SignUp() {
     }
   };
 
-  const handleSignUp = () => {
-    const userData = { name, role, email, pw, phone, selectedKeywords };
-    localStorage.setItem('user', JSON.stringify(userData));
-    alert('회원가입이 완료되었습니다.');
-    navigate('/login');
+  const handleSignUp = async () => {
+    try {
+      const createdUser = await createUserWithEmailAndPassword(auth, email, pw);
+      console.log('회원가입 성공:', createdUser);
+      // 추가적으로 사용자의 이름, 전화번호, 관심 키워드를 Firebase Firestore에 저장할 수 있음
+      navigate('/login');
+    } catch (error) {
+      console.error('회원가입 오류:', error);
+      alert('회원가입 중 오류가 발생했습니다.');
+    }
   };
 
   return (
