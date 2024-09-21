@@ -173,15 +173,46 @@ export default function SignUp() {
     }
   };
 
+  // Firebase로 회원가입 처리 및 데이터베이스에 저장
   const handleSignUp = async () => {
     try {
+      // Firebase Authentication에 사용자 등록
       const createdUser = await createUserWithEmailAndPassword(auth, email, pw);
       console.log('회원가입 성공:', createdUser);
-      // 추가적으로 사용자의 이름, 전화번호, 관심 키워드를 Firebase Firestore에 저장할 수 있음
-      navigate('/login');
+
+      // auth.currentUser가 있는지 확인 후 프로필 업데이트
+      if (auth.currentUser) {
+        await updateProfile(auth.currentUser, {
+          displayName: name,
+        });
+
+        // Firebase Realtime Database에 사용자 추가 정보 저장
+        const userId = createdUser.user.uid;
+        await set(ref(db, 'users/' + userId), {
+          name: name,
+          role: role,
+          phone: phone,
+          keywords: selectedKeywords,
+        });
+
+        console.log('사용자 정보 저장 완료:', {
+          name: name,
+          role: role,
+          phone: phone,
+          keywords: selectedKeywords,
+        });
+
+        // 회원가입 후 로그인 페이지로 이동
+        navigate('/login');
+      }
     } catch (error) {
-      console.error('회원가입 오류:', error);
-      alert('회원가입 중 오류가 발생했습니다.');
+      // 이메일 중복 오류 처리
+      if (error.code === 'auth/email-already-in-use') {
+        alert('이미 사용 중인 이메일입니다. 다른 이메일을 입력하세요.');
+      } else {
+        console.error('회원가입 오류:', error);
+        alert('회원가입 중 오류가 발생했습니다.');
+      }
     }
   };
 
