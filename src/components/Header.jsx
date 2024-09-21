@@ -28,6 +28,7 @@ const StyledDrawerList = styled.div`
 const StyledListItem = styled(ListItem)`
   &:hover {
     background-color: #e0e0e0;
+    cursor: pointer; 
   }
 `;
 
@@ -49,23 +50,54 @@ const FlexGrowDiv = styled.div`
   color: #000;
 `;
 
+const ProfileButton = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const ProfileImage = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+`;
+
+const UserName = styled.span`
+  font-size: 17px;
+  color: #000;
+  font-weight: bold;
+`;
+
 const Header = () => {
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState(null); // user 상태 추가
-  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate(); // useNavigate 추가
+  
+  // Firebase 인증 인스턴스 가져오기
   const auth = getAuth(app);
 
+  // 로그인한 사용자 정보 가져오기
   useEffect(() => {
-    // Firebase에서 로그인 상태를 확인하여 user 설정
+    // Firebase Authentication에서 현재 로그인한 유저를 감지
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser);
+        setUser(currentUser); // 현재 로그인한 유저 정보 설정
       } else {
-        setUser(null);
+        setUser(null); // 로그아웃 시 null
       }
     });
 
-    return () => unsubscribe(); // cleanup
+    return () => unsubscribe(); // 컴포넌트가 언마운트되면 리스너 정리
   }, [auth]);
 
   const toggleDrawer = (newOpen) => () => {
@@ -126,6 +158,16 @@ const Header = () => {
             <Logo src="https://www.daegu.go.kr/cmsh/daegu.go.kr/images/2023/common/logo_header_m.png" alt="Logo" />
           </Link>
           <FlexGrowDiv />
+          {/* 프로필 이미지와 사용자 이름 표시 */}
+          {user && (
+            <ProfileButton onClick={() => navigate('/mypage')}>
+              <ProfileImage
+                src="https://img.freepik.com/free-psd/3d-rendering-avatar_23-2150833572.jpg"
+                alt="Profile"
+              />
+              <UserName>{user.displayName || user.email} 님</UserName>
+            </ProfileButton>
+          )}
           <MenuIcon onClick={toggleDrawer(true)} sx={{ color: '#000' }} />
           <Drawer open={open} onClose={toggleDrawer(false)}>
             {DrawerList}

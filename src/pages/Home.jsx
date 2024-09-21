@@ -45,8 +45,6 @@ const Home = () => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser); // 현재 로그인한 유저 정보 설정
-        // Firestore나 Realtime Database에서 사용자 추가 정보(키워드)를 가져오려면 이곳에서 추가 가능
-        // 예시로, 이메일을 기반으로 Firestore에서 추가 정보를 가져오는 로직을 작성할 수 있습니다.
       } else {
         setUser(null); // 로그아웃 시 null
       }
@@ -58,13 +56,6 @@ const Home = () => {
   return (
     <Container>
       <ItemSlider />
-       {/* 유저가 로그인한 상태일 때 사용자 정보 표시 */}
-       {user && (
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <h2>Welcome, {user.displayName || 'User'}!</h2> {/* 유저 이름 출력 */}
-          <p>Email: {user.email}</p> {/* 유저 이메일 출력 */}
-        </div>
-      )}
       {/* <MainCardContainer>
         {MainCardInfo.map((card, index) => {
           return (
@@ -78,14 +69,6 @@ const Home = () => {
           );
         })}
       </MainCardContainer> */}
-      {/* {userKeywords.length > 0 && (
-        <div>
-          <h3>Your Keywords:</h3>
-          {userKeywords.map((keyword, index) => (
-            <span key={index}>{keyword}</span>
-          ))}
-        </div>
-      )} */}
       <Footer />
     </Container>
   );
