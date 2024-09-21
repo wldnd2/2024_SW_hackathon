@@ -92,8 +92,6 @@ const Header = () => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser); // 현재 로그인한 유저 정보 설정
-        // Firestore나 Realtime Database에서 사용자 추가 정보(키워드)를 가져오려면 이곳에서 추가 가능
-        // 예시로, 이메일을 기반으로 Firestore에서 추가 정보를 가져오는 로직을 작성할 수 있습니다.
       } else {
         setUser(null); // 로그아웃 시 null
       }

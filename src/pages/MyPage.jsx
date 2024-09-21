@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import '../styles/MyPage.css'; // Include your CSS file for layout and styles
 import StorePage from './StorePage'; // Import the store page component
 import CreatorPage from './CreatorPage';
+import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Firebase Auth 관련 import
+import app from '../firebase';
 
 export default function MyPage() {
   // State to track which page content to show
@@ -15,6 +17,24 @@ export default function MyPage() {
   const [nameValid, setNameValid] = useState(true); // Assume name is valid initially
   const [emailValid, setEmailValid] = useState(false);
   const [phoneNValid, setPhoneNValid] = useState(false);
+
+  const [user, setUser] = useState(null);
+
+  const auth = getAuth(app);
+
+  // 로그인한 사용자 정보 가져오기
+  useEffect(() => {
+    // Firebase Authentication에서 현재 로그인한 유저를 감지
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // 현재 로그인한 유저 정보 설정
+      } else {
+        setUser(null); // 로그아웃 시 null
+      }
+    });
+
+    return () => unsubscribe(); // 컴포넌트가 언마운트되면 리스너 정리
+  }, [auth]);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -42,17 +62,17 @@ export default function MyPage() {
   }, [nameValid, emailValid, phoneNValid]);
 
   // 로컬 스토리지에서 사용자 정보 불러오기
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser) {
-      setName(storedUser.name);
-      setEmail(storedUser.email);
-      setEmailValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(storedUser.email)); // 이메일 로드 후 즉시 검증
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedUser = JSON.parse(localStorage.getItem('user'));
+  //   if (storedUser) {
+  //     setName(storedUser.name);
+  //     setEmail(storedUser.email);
+  //     setEmailValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(storedUser.email)); // 이메일 로드 후 즉시 검증
+  //   }
+  // }, []);
 
   const renderContent = () => {
-    if (activePage === 'account') {
+    if (activePage === 'account' || user) {
       return (
         <div className="profile-form">
           <h1>회원 정보</h1>
@@ -61,7 +81,7 @@ export default function MyPage() {
             <input
               type="text"
               className="input"
-              placeholder="이름을 입력하세요"
+              placeholder={user.displayName}
               value={name}
               onChange={handleName}
             />
@@ -77,7 +97,7 @@ export default function MyPage() {
             <input
               type="email"
               className="input"
-              placeholder="이메일을 입력하세요"
+              placeholder={user.email}
               value={email}
               onChange={handleEmail}
             />
@@ -93,7 +113,7 @@ export default function MyPage() {
             <input
               type="text"
               className="input"
-              placeholder="010-XXXX-XXXX 또는 053-XXXX-XXXX"
+              placeholder={user.email}
               value={phoneN}
               onChange={handlePhoneN}
             />
