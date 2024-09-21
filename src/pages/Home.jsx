@@ -16,7 +16,7 @@ const MainCardContainer = styled.div`
 `;
 
 const Footer = styled.footer`
-  background-color: #333;
+  background-color: #555;
   color: #fff;
   text-align: center;
   padding: 20px 0;
