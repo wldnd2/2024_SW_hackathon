@@ -93,7 +93,10 @@ const Header = () => {
     <HeaderContainer>
       <AppBar position="fixed" sx={{ backgroundColor: '#fff', borderRadius: "0 0 15px 15px" }}>
         <Toolbar>
-          <Logo src="https://www.daegu.go.kr/cmsh/daegu.go.kr/images/2023/common/logo_header_m.png" alt="Logo" />
+          {/* 로고를 Link로 감싸서 메인 페이지로 이동 가능하도록 수정 */}
+          <Link to="/">
+            <Logo src="https://www.daegu.go.kr/cmsh/daegu.go.kr/images/2023/common/logo_header_m.png" alt="Logo" />
+          </Link>
           <FlexGrowDiv />
           <MenuIcon onClick={toggleDrawer(true)} sx={{ color: '#000' }} />
           <Drawer open={open} onClose={toggleDrawer(false)}>
