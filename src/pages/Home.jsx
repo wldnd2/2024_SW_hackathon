@@ -19,7 +19,7 @@ const Footer = styled.footer`
   background-color: #333;
   color: #fff;
   text-align: center;
-  padding: 40px 0;
+  padding: 20px 0;
   width: 100%; /* Makes footer full width */
   position: absolute;
   bottom: 0;
