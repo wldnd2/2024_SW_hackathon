@@ -1,52 +1,29 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { Typography, TextField, Select, MenuItem, Card, CardContent, CardMedia } from '@mui/material';
+import CreatorList from '../constants/CreatorList'; // 크리에이터 데이터 가져오기
 
 const Page = styled.div`
   padding: 20px;
-`;
-
-const TitleWrap = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
 `;
 
 const SearchWrap = styled.div`
   margin-bottom: 20px;
 `;
 
-const SearchInput = styled.input`
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
 const FilterWrap = styled.div`
   margin-bottom: 20px;
 `;
 
-const Select = styled.select`
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
-const CreatorList = styled.div`
+const CreatorListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
 `;
 
-const CreatorCard = styled.div`
+const CreatorCard = styled(Card)`
   width: calc(33.333% - 16px);
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s;
 
@@ -61,17 +38,7 @@ const CardImageContainer = styled.div`
   overflow: hidden;
 `;
 
-const CreatorImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const CardContent = styled.div`
-  padding: 10px;
-`;
-
-const NoResult = styled.div`
+const NoResult = styled(Typography)`
   text-align: center;
   color: #999;
   font-size: 18px;
@@ -85,11 +52,7 @@ export default function Search() {
 
   // 데이터 불러오기
   useEffect(() => {
-    // 데이터를 JSON 파일에서 불러오는 fetch 함수
-    fetch('/creators.json')
-      .then(response => response.json())
-      .then(data => setCreators(data))
-      .catch(error => console.error('Error fetching data:', error));
+    setCreators(CreatorList);
   }, []);
 
   // 검색 및 필터링된 크리에이터 목록
@@ -120,14 +83,15 @@ export default function Search() {
 
   return (
     <Page>
-      <TitleWrap>
+      <Typography variant="h4" component="div" gutterBottom>
         크리에이터 검색 및 필터링 페이지
-      </TitleWrap>
+      </Typography>
 
       {/* 검색창 */}
       <SearchWrap>
-        <SearchInput
-          type="text"
+        <TextField
+          fullWidth
+          variant="outlined"
           placeholder="상점 이름을 검색하세요"
           value={searchTerm}
           onChange={handleSearch}
@@ -136,17 +100,24 @@ export default function Search() {
 
       {/* 필터 섹션 */}
       <FilterWrap>
-        <Select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
-          <option value="">카테고리</option>
-          <option value="지역가치">지역가치</option>
-          <option value="로컬푸드">로컬푸드</option>
-          <option value="지역기반제조">지역기반제조</option>
-          <option value="디지털문화체험">디지털문화체험</option>
+        <Select
+          fullWidth
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+          displayEmpty
+        >
+          <MenuItem value="">
+            <em>카테고리</em>
+          </MenuItem>
+          <MenuItem value="지역가치">지역가치</MenuItem>
+          <MenuItem value="로컬푸드">로컬푸드</MenuItem>
+          <MenuItem value="지역기반제조">지역기반제조</MenuItem>
+          <MenuItem value="디지털문화체험">디지털문화체험</MenuItem>
         </Select>
       </FilterWrap>
 
       {/* 크리에이터 목록을 카드 형식으로 표시 */}
-      <CreatorList>
+      <CreatorListContainer>
         {filteredCreators.length > 0 ? (
           filteredCreators.map((creator, index) => (
             <CreatorCard 
@@ -155,22 +126,35 @@ export default function Search() {
             >
               {/* 이미지 */}
               <CardImageContainer>
-                <CreatorImage src={creator.imageUrl} alt={creator.name} />
+                <CardMedia
+                  component="img"
+                  height="200"
+                  image={creator.imageUrl}
+                  alt={creator.name}
+                />
               </CardImageContainer>
               
               {/* 내용 */}
               <CardContent>
-                <h3>{creator.name}</h3>
-                <p>{extractItemTitle(creator.item)}</p>
-                <p>분야: {creator.category}</p>
-                <p>지역: {creator.region} {creator.subregion}</p>
+                <Typography variant="h6" component="div">
+                  {creator.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {extractItemTitle(creator.item)}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  분야: {creator.category}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  지역: {creator.region} {creator.subregion}
+                </Typography>
               </CardContent>
             </CreatorCard>
           ))
         ) : (
           <NoResult>검색 결과가 없습니다.</NoResult>
         )}
-      </CreatorList>
+      </CreatorListContainer>
     </Page>
   );
 }
