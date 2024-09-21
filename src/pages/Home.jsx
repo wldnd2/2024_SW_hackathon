@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import ItemSlider from '../components/ItemSlider';
 import MainCard from '../components/MainCard';
 import { MainCardInfo } from '../constants/MainCardInfo';
+import Footer from '../components/Footer';
 
 const Container = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ const Home = () => {
           );
         })}
       </MainCardContainer>
+      <Footer />
     </Container>
   );
 };

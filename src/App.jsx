@@ -11,7 +11,6 @@ import SignUp from './pages/SignUp';
 import Header from './components/Header';
 import MatchingDetail from "./pages/MatchingDetail";
 import MatchingApply from "./pages/MatchingApply"; 
-import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -29,7 +28,6 @@ const App = () => {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/my-store" element={<StorePage />} /> {/* New route for store info */}
       </Routes>
-      <Footer />
     </Router>
   );
 }
