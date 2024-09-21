@@ -43,18 +43,9 @@
   background-color: #f0f0f0;
 }
 
-.main-content {
+.main-content, .page {
   flex: 1;
   padding: 40px;
-}
-
-.profile-form {
-  max-width: 600px;
-  margin: auto;
-}
-
-.inputWrap {
-  margin-bottom: 20px;
 }
 
 .inputTitle {
@@ -63,7 +54,20 @@
   margin-bottom: 10px;
 }
 
+.inputWrap {
+  margin-bottom: 20px;
+}
+
 .input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.bio-textarea{
+  height: 200px;
   width: 100%;
   padding: 10px;
   font-size: 16px;
@@ -83,9 +87,22 @@
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
+  width: 100%;
+  font-size: 16px;
 }
 
 .bottomButton:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.titleWrap {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h1{
+  margin-bottom: 30px;
 }

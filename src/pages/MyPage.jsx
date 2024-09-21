@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/MyPage.css'; // Include your CSS file for layout and styles
 import StorePage from './StorePage'; // Import the store page component
+import CreatorPage from './CreatorPage';
 
 export default function MyPage() {
   // State to track which page content to show
@@ -25,7 +26,7 @@ export default function MyPage() {
   const handleEmail = (e) => {
     setEmail(e.target.value);
     const regex =
-      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     setEmailValid(regex.test(email));
   };
 
@@ -36,9 +37,19 @@ export default function MyPage() {
     setPhoneNValid(regex.test(cleanedValue));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setNotAllow(!(nameValid && emailValid && phoneNValid));
   }, [nameValid, emailValid, phoneNValid]);
+
+  // 로컬 스토리지에서 사용자 정보 불러오기
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setName(storedUser.name);
+      setEmail(storedUser.email);
+      setEmailValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(storedUser.email)); // 이메일 로드 후 즉시 검증
+    }
+  }, []);
 
   const renderContent = () => {
     if (activePage === 'account') {
@@ -77,7 +88,7 @@ export default function MyPage() {
             )}
           </div>
 
-          <div style={{ marginTop: '26px' }} className="inputTitle">전화번호</div>
+          <div style={{ marginTop: '26px' }} className="inputTitle">휴대폰 번호</div>
           <div className="inputWrap">
             <input
               type="text"
@@ -105,6 +116,8 @@ export default function MyPage() {
     } else if (activePage === 'store') {
       // Render the store page component
       return <StorePage />;
+    } else if (activePage === 'creator') {
+      return <CreatorPage />;
     }
   };
 
@@ -113,12 +126,13 @@ export default function MyPage() {
       {/* Sidebar */}
       <div className="sidebar">
         <div className="profile-section">
-          <div className="profile-name">김동주</div>
+          <div className="profile-name">{name}</div> {/* 자동으로 이름 표시 */}
           <div className="profile-status"></div>
         </div>
         <ul className="menu-list">
           <li onClick={() => setActivePage('account')}>회원 정보</li>
-          <li onClick={() => setActivePage('store')}>나의 상점 정보</li>
+          <li onClick={() => setActivePage('store')}>내 상점 정보</li>
+          <li onClick={() => setActivePage('creator')}>내 크리에이터 정보</li>
           <li onClick={() => setActivePage('matching')}>매칭 현황</li>
         </ul>
       </div>
