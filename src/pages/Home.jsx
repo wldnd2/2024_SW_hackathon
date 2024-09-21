@@ -10,25 +10,25 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-// const MainCardContainer = styled.div`
-//   display: flex;
-//   flex-wrap: wrap;
-//   justify-content: center;
-//   align-items: center;
-// `;
+const MainCardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
 
-// const KeywordSection = styled.div`
-//   margin: 20px;
-//   text-align: center;
-// `;
+const KeywordSection = styled.div`
+  margin: 20px;
+  text-align: center;
+`;
 
-// const Keyword = styled.span`
-//   background-color: #f0f0f0;
-//   border-radius: 12px;
-//   padding: 8px 12px;
-//   margin: 5px;
-//   display: inline-block;
-// `;
+const Keyword = styled.span`
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin: 5px;
+  display: inline-block;
+`;
 
 const Home = () => {
   const [userKeywords, setUserKeywords] = useState([]);

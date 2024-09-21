@@ -20,7 +20,6 @@ const Page = styled.div`
     left: 50%;
     transform: translate(-50%, 0);
     background-color: #F7F7F7;
-    overflow: hidden;
 `;
 
 const TitleWrap = styled.div`
@@ -138,7 +137,7 @@ export default function SignUp() {
   const [selectedKeywords, setSelectedKeywords] = useState([]); // 선택된 키워드
   const navigate = useNavigate();
 
-  const keywords = ['트렌드', '가족', '여행', '문화', '스포츠', '음악', '음식', '자연', '기술', '건강'];
+  const keywords = ['제조','스마트','반려동물','식품','섬유','한약','육아','공구','아트','체험','전시회','다이어트','음악','페스티벌','의류','신소재','빵','주얼리','화훼','업사이클링','트렌드', '가족', '여행', '문화', '스포츠', '음악', '음식', '자연', '기술', '건강'];
 
   useEffect(() => {
     setEmail('');
@@ -168,7 +167,7 @@ export default function SignUp() {
   const handleKeywordSelect = (keyword) => {
     if (selectedKeywords.includes(keyword)) {
       setSelectedKeywords(selectedKeywords.filter(k => k !== keyword));
-    } else if (selectedKeywords.length < 3) {
+    } else if (selectedKeywords.length < 5) {
       setSelectedKeywords([...selectedKeywords, keyword]);
     }
   };
@@ -271,14 +270,14 @@ export default function SignUp() {
         </InputWrap>
         <ErrorMessageWrap>{!phoneValid && phone.length > 0 && <div>올바른 전화번호를 입력해주세요.</div>}</ErrorMessageWrap>
 
-        <InputTitle>관심 키워드 (최대 3개 선택)</InputTitle>
+        <InputTitle>관심 키워드 (최대 5개 선택)</InputTitle>
         <KeywordContainer>
           {keywords.map((keyword) => (
             <KeywordButton
               key={keyword}
               onClick={() => handleKeywordSelect(keyword)}
               selected={selectedKeywords.includes(keyword)}
-              disabled={selectedKeywords.length >= 3 && !selectedKeywords.includes(keyword)}
+              disabled={selectedKeywords.length >= 5 && !selectedKeywords.includes(keyword)}
             >
               {keyword}
             </KeywordButton>
