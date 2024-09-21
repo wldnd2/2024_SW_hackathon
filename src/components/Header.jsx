@@ -28,6 +28,7 @@ const StyledDrawerList = styled.div`
 const StyledListItem = styled(ListItem)`
   &:hover {
     background-color: #e0e0e0;
+    cursor: pointer; 
   }
 `;
 
@@ -49,11 +50,18 @@ const FlexGrowDiv = styled.div`
   color: #000;
 `;
 
-const ProfileContainer = styled.div`
+const ProfileButton = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
   margin-right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const ProfileImage = styled.img`
@@ -98,11 +106,11 @@ const Header = () => {
     setOpen(newOpen);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('user'); // localStorage에서 사용자 정보 삭제
-    alert('로그아웃 되었습니다.');
-    navigate('/'); // 로그아웃 후 홈으로 이동
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem('user'); // localStorage에서 사용자 정보 삭제
+  //   alert('로그아웃 되었습니다.');
+  //   navigate('/'); // 로그아웃 후 홈으로 이동
+  // };
 
   const DrawerList = (
     <StyledDrawerList>
@@ -140,13 +148,13 @@ const Header = () => {
           <FlexGrowDiv />
           {/* 프로필 이미지와 사용자 이름 표시 */}
           {user && (
-            <ProfileContainer>
+            <ProfileButton onClick={() => navigate('/mypage')}>
               <ProfileImage
                 src="https://img.freepik.com/free-psd/3d-rendering-avatar_23-2150833572.jpg"
                 alt="Profile"
               />
               <UserName>{user.displayName || user.email} 님</UserName>
-            </ProfileContainer>
+            </ProfileButton>
           )}
           <MenuIcon onClick={toggleDrawer(true)} sx={{ color: '#000' }} />
           <Drawer open={open} onClose={toggleDrawer(false)}>
