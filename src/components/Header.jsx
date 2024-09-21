@@ -12,6 +12,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import styled from 'styled-components';
+import { getAuth, signOut } from 'firebase/auth'; // signOut 추가
 
 const HeaderContainer = styled.div`
   padding-bottom: 5px;
@@ -50,15 +51,28 @@ const FlexGrowDiv = styled.div`
 const Header = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate(); // useNavigate 추가
+  const auth = getAuth();
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
+  // const handleLogout = () => {
+  //   localStorage.removeItem('user'); // localStorage에서 사용자 정보 삭제
+  //   alert('로그아웃 되었습니다.');
+  //   navigate('/'); // 로그아웃 후 홈으로 이동
+  // };
   const handleLogout = () => {
-    localStorage.removeItem('user'); // localStorage에서 사용자 정보 삭제
-    alert('로그아웃 되었습니다.');
-    navigate('/'); // 로그아웃 후 홈으로 이동
+    signOut(auth) // Firebase 로그아웃
+      .then(() => {
+        localStorage.removeItem('user'); // localStorage에서 사용자 정보 삭제
+        alert('로그아웃 되었습니다.');
+        navigate('/'); // 로그아웃 후 홈으로 이동
+      })
+      .catch((error) => {
+        console.error('로그아웃 중 오류 발생:', error);
+        alert('로그아웃 중 오류가 발생했습니다.');
+      });
   };
 
   const DrawerList = (
