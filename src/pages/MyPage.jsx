@@ -25,7 +25,7 @@ export default function MyPage() {
   const handleEmail = (e) => {
     setEmail(e.target.value);
     const regex =
-      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     setEmailValid(regex.test(email));
   };
 
@@ -77,7 +77,7 @@ export default function MyPage() {
             )}
           </div>
 
-          <div style={{ marginTop: '26px' }} className="inputTitle">전화번호</div>
+          <div style={{ marginTop: '26px' }} className="inputTitle">휴대폰 번호</div>
           <div className="inputWrap">
             <input
               type="text"
