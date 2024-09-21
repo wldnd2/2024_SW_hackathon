@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ItemSlider from '../components/ItemSlider';
 // import MainCard from '../components/MainCard';
@@ -16,7 +17,30 @@ const Container = styled.div`
 //   align-items: center;
 // `;
 
+const KeywordSection = styled.div`
+  margin: 20px;
+  text-align: center;
+`;
+
+const Keyword = styled.span`
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin: 5px;
+  display: inline-block;
+`;
+
 const Home = () => {
+  const [userKeywords, setUserKeywords] = useState([]);
+
+  useEffect(() => {
+    // localStorage에서 회원가입 시 저장된 유저 데이터를 가져옴
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (userData && userData.selectedKeywords) {
+      setUserKeywords(userData.selectedKeywords);
+    }
+  }, []);
+
   return (
     <Container>
       <ItemSlider />
