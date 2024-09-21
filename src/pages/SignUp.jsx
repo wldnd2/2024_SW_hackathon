@@ -98,15 +98,17 @@ export default function SignUp() {
   const [role, setRole] = useState('상인');
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
+  const [phone, setPhone] = useState('');  
   const [emailValid, setEmailValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
+  const [phoneValid, setPhoneValid] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     setEmail('');
     setPw('');
+    setPhone('');
   }, []);
-
   const handleEmail = (e) => {
     setEmail(e.target.value);
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -117,6 +119,13 @@ export default function SignUp() {
     setPw(e.target.value);
     const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
     setPwValid(regex.test(e.target.value));
+  };
+
+  const handlePhone = (e) => {
+    const cleanedValue = e.target.value.replace(/\s+/g, '');
+    setPhone(cleanedValue);
+    const regex = /^(010|053)-\d{4}-\d{4}$/;
+    setPhoneValid(regex.test(cleanedValue));
   };
 
   const handleSignUp = () => {
@@ -169,10 +178,22 @@ export default function SignUp() {
           autoComplete="off"  />
         </InputWrap>
         <ErrorMessageWrap>{!pwValid && pw.length > 0 && <div>영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.</div>}</ErrorMessageWrap>
+        
+        <InputTitle>전화번호</InputTitle>  {/* 전화번호 입력 필드 추가 */}
+        <InputWrap>
+          <Input 
+            type="text" 
+            placeholder= "010-XXXX-XXXX 또는 053-XXXX-XXXX"
+            value={phone} 
+            onChange={handlePhone}
+            autoComplete="off" />
+        </InputWrap>
+        <ErrorMessageWrap>{!phoneValid && phone.length > 0 && <div>올바른 전화번호를 입력해주세요.</div>}</ErrorMessageWrap>
+      
       </ContentWrap>
 
       <div style={{ marginTop: "50px" }}>
-        <BottomButton onClick={handleSignUp} disabled={!emailValid || !pwValid}>
+        <BottomButton onClick={handleSignUp} disabled={!emailValid || !pwValid || !phoneValid}>
           회원가입
         </BottomButton>
       </div>
