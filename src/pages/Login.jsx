@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'; // Firebase Auth 관련 import
+import app from '../firebase'; // Firebase 초기화
 
 const Page = styled.div`
     position: absolute;
@@ -109,6 +111,9 @@ const SignupButton = styled.button`
     }
 `;
 
+// Firebase 인증 가져오기
+const auth = getAuth(app);
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
@@ -142,16 +147,25 @@ export default function Login() {
     setPwValid(regex.test(e.target.value));
   };
 
-  const onClickConfirmButton = () => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-
-    if (storedUser && email === storedUser.email && pw === storedUser.pw) {
-      alert('로그인에 성공했습니다.');
-      navigate('/');
-    } else {
-      alert('등록되지 않은 회원입니다.');
-    }
-  };
+    // Firebase로 로그인 처리
+    const onClickConfirmButton = async () => {
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, pw);
+        const user = userCredential.user;
+        console.log('로그인 성공:', user);
+        alert('로그인에 성공했습니다.');
+        navigate('/'); // 로그인 성공 시 홈으로 이동
+      } catch (error) {
+        if (error.code === 'auth/user-not-found') {
+          alert('등록되지 않은 회원입니다.');
+        } else if (error.code === 'auth/wrong-password') {
+          alert('비밀번호가 틀렸습니다.');
+        } else {
+          alert('로그인 중 오류가 발생했습니다.');
+          console.error(error);
+        }
+      }
+    };  
 
   return (
     <Page>
