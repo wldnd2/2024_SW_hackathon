@@ -6,35 +6,18 @@ import ItemSlider from '../components/ItemSlider';
 import Footer from '../components/Footer';
 import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Firebase Auth 관련 import
 import app from '../firebase';
+import KeywordListComponent from '../components/KeywordListComponent';
+import CreatorListComponent from '../components/CreatorListComponent';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-// const MainCardContainer = styled.div`
-//   display: flex;
-//   flex-wrap: wrap;
-//   justify-content: center;
-//   align-items: center;
-// `;
-
-// const KeywordSection = styled.div`
-//   margin: 20px;
-//   text-align: center;
-// `;
-
-// const Keyword = styled.span`
-//   background-color: #f0f0f0;
-//   border-radius: 12px;
-//   padding: 8px 12px;
-//   margin: 5px;
-//   display: inline-block;
-// `;
-
 const Home = () => {
   const [user, setUser] = useState(null);
-  //const [userKeywords, setUserKeywords] = useState([]);
+
+  const [userKeywords] = useState([]);
 
   // Firebase 인증 인스턴스 가져오기
   const auth = getAuth(app);
@@ -56,19 +39,25 @@ const Home = () => {
   return (
     <Container>
       <ItemSlider />
-      {/* <MainCardContainer>
-        {MainCardInfo.map((card, index) => {
-          return (
-            <MainCard
-              key={index}
-              title={card.title}
-              description={card.description}
-              image={card.image}
-              link={card.link}
-            />
-          );
-        })}
-      </MainCardContainer> */}
+
+       {/* 유저가 로그인한 상태일 때 사용자 정보 표시 */}
+        {user && (
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <h2>Welcome, {user.displayName || 'User'}!</h2> {/* 유저 이름 출력 */}
+          <p>Email: {user.email}</p> {/* 유저 이메일 출력 */}
+        </div>
+      )}
+      
+      {userKeywords.length > 0 && (
+        <div>
+          <h3>Your Keywords:</h3>
+          {userKeywords.map((keyword, index) => (
+            <span key={index}>{keyword}</span>
+          ))}
+        </div>
+      )}
+      <KeywordListComponent />
+      <CreatorListComponent />
       <Footer />
     </Container>
   );
