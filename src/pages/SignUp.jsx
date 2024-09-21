@@ -13,8 +13,6 @@ const Page = styled.div`
     transform: translate(-50%, 0);
     background-color: #F7F7F7;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
 `;
 
 const TitleWrap = styled.div`
@@ -60,6 +58,16 @@ const Input = styled.input`
     &::placeholder {
         color: #dadada;
     }
+`;
+
+const Select = styled.select`
+    width: 100%;
+    outline: none;
+    border: none;
+    height: 17px;
+    font-size: 14px;
+    font-weight: 400;
+    background-color: transparent;
 `;
 
 const BottomButton = styled.button`
@@ -134,10 +142,10 @@ export default function SignUp() {
 
         <InputTitle>역할 선택</InputTitle>
         <InputWrap>
-          <select className="input" value={role} onChange={(e) => setRole(e.target.value)}>
+          <Select value={role} onChange={(e) => setRole(e.target.value)}>
             <option value="상점">상점</option>
             <option value="크리에이터">로컬 크리에이터</option>
-          </select>
+          </Select>
         </InputWrap>
 
         <InputTitle>이메일 주소</InputTitle>
@@ -163,7 +171,7 @@ export default function SignUp() {
         <ErrorMessageWrap>{!pwValid && pw.length > 0 && <div>영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.</div>}</ErrorMessageWrap>
       </ContentWrap>
 
-      <div>
+      <div style={{ marginTop: "50px" }}>
         <BottomButton onClick={handleSignUp} disabled={!emailValid || !pwValid}>
           회원가입
         </BottomButton>
