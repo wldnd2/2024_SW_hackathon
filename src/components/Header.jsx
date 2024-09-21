@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate 추가
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,7 +12,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import styled from 'styled-components';
-import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Firebase Auth 관련 import
+import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'; // signOut 및 onAuthStateChanged 추가
 import app from '../firebase';
 
 const HeaderContainer = styled.div`
@@ -104,11 +104,18 @@ const Header = () => {
     setOpen(newOpen);
   };
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem('user'); // localStorage에서 사용자 정보 삭제
-  //   alert('로그아웃 되었습니다.');
-  //   navigate('/'); // 로그아웃 후 홈으로 이동
-  // };
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        localStorage.removeItem('user');
+        alert('로그아웃 되었습니다.');
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error('로그아웃 중 오류 발생:', error);
+        alert('로그아웃 중 오류가 발생했습니다.');
+      });
+  };
 
   const DrawerList = (
     <StyledDrawerList>
@@ -125,15 +132,20 @@ const Header = () => {
           <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
           <StyledListItemText primary="My Page" />
         </StyledListItem>
-        <StyledListItem button={true} component={Link} to="/login" onClick={toggleDrawer(false)}>
-          <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
-          <StyledListItemText primary="Login" />
-        </StyledListItem>
-        {/* 로그아웃 버튼에 onClick 이벤트 추가 */}
-        <StyledListItem button={true} onClick={() => { handleLogout(); toggleDrawer(false)(); }}>
-          <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
-          <StyledListItemText primary="Logout" />
-        </StyledListItem>
+        {/* 로그인 상태에 따라 Login 버튼을 조건부로 렌더링 */}
+        {!user && (
+          <StyledListItem button={true} component={Link} to="/login" onClick={toggleDrawer(false)}>
+            <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
+            <StyledListItemText primary="Login" />
+          </StyledListItem>
+        )}
+        {/* 로그아웃 버튼도 로그인 상태에서만 보이도록 */}
+        {user && (
+          <StyledListItem button={true} onClick={() => { handleLogout(); toggleDrawer(false)(); }}>
+            <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
+            <StyledListItemText primary="Logout" />
+          </StyledListItem>
+        )}
       </List>
     </StyledDrawerList>
   );
@@ -142,7 +154,9 @@ const Header = () => {
     <HeaderContainer>
       <AppBar position="fixed" sx={{ backgroundColor: '#fff', borderRadius: "0 0 15px 15px" }}>
         <Toolbar>
-          <Logo src="https://www.daegu.go.kr/cmsh/daegu.go.kr/images/2023/common/logo_header_m.png" alt="Logo" />
+          <Link to="/">
+            <Logo src="https://www.daegu.go.kr/cmsh/daegu.go.kr/images/2023/common/logo_header_m.png" alt="Logo" />
+          </Link>
           <FlexGrowDiv />
           {/* 프로필 이미지와 사용자 이름 표시 */}
           {user && (
@@ -163,6 +177,6 @@ const Header = () => {
       <Toolbar /> {/* This is to offset the content below the AppBar */}
     </HeaderContainer>
   );
-}
+};
 
 export default Header;
