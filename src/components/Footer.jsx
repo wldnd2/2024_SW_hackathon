@@ -6,9 +6,7 @@ const Styled_Footer = styled.footer`
   text-align: center;
   padding: 20px 0;
   width: 100%; /* Makes footer full width */
-  position: absolute;
-  bottom: 0;
-
+  margin-top: 20px;
   span {
     display: block;
     margin-top: 5px; /* Adjust this for more/less spacing */

@@ -7,10 +7,12 @@ import Footer from '../components/Footer';
 import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Firebase Auth 관련 import
 import app from '../firebase';
 import KeywordListComponent from '../components/KeywordListComponent';
+import CreatorListComponent from '../components/CreatorListComponent';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+
 `;
 
 // const MainCardContainer = styled.div`
@@ -88,6 +90,7 @@ const Home = () => {
         </div>
       )}
       <KeywordListComponent />
+      <CreatorListComponent />
       <Footer />
     </Container>
   );
