@@ -17,18 +17,18 @@ const Container = styled.div`
 //   align-items: center;
 // `;
 
-const KeywordSection = styled.div`
-  margin: 20px;
-  text-align: center;
-`;
+// const KeywordSection = styled.div`
+//   margin: 20px;
+//   text-align: center;
+// `;
 
-const Keyword = styled.span`
-  background-color: #f0f0f0;
-  border-radius: 12px;
-  padding: 8px 12px;
-  margin: 5px;
-  display: inline-block;
-`;
+// const Keyword = styled.span`
+//   background-color: #f0f0f0;
+//   border-radius: 12px;
+//   padding: 8px 12px;
+//   margin: 5px;
+//   display: inline-block;
+// `;
 
 const Home = () => {
   const [userKeywords, setUserKeywords] = useState([]);
@@ -57,6 +57,14 @@ const Home = () => {
           );
         })}
       </MainCardContainer> */}
+      {userKeywords.length > 0 && (
+        <div>
+          <h3>Your Keywords:</h3>
+          {userKeywords.map((keyword, index) => (
+            <span key={index}>{keyword}</span>
+          ))}
+        </div>
+      )}
       <Footer />
     </Container>
   );
