@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import '../styles/MyPage.css'; // Include your CSS file for layout and styles
 import StorePage from './StorePage'; // Import the store page component
 import CreatorPage from './CreatorPage';
+import MatchingPage from './MatchingPage';
 import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Firebase Auth 관련 import
 import app from '../firebase';
 
@@ -138,6 +139,8 @@ export default function MyPage() {
       return <StorePage />;
     } else if (activePage === 'creator') {
       return <CreatorPage />;
+    } else if (activePage === 'matching') {
+      return <MatchingPage />;
     }
   };
 
@@ -153,7 +156,7 @@ export default function MyPage() {
           <li onClick={() => setActivePage('account')}>회원 정보</li>
           <li onClick={() => setActivePage('store')}>내 상점 정보</li>
           <li onClick={() => setActivePage('creator')}>내 크리에이터 정보</li>
-          <li onClick={() => setActivePage('matching')}>매칭 현황</li>
+          <li onClick={() => setActivePage('matching')}>매칭 기록</li>
         </ul>
       </div>
 
