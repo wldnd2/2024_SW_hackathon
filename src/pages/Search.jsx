@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Typography, TextField, Select, MenuItem, Card, CardContent, CardMedia } from '@mui/material';
 import CreatorList from '../constants/CreatorList'; // 크리에이터 데이터 가져오기
+import CreatorModal from '../components/CreatorModal'; // CreatorModal 컴포넌트 가져오기
 
 const Page = styled.div`
   padding: 20px;
@@ -49,6 +49,8 @@ export default function Search() {
   const [creators, setCreators] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
+  const [selectedCreator, setSelectedCreator] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // 데이터 불러오기
   useEffect(() => {
@@ -63,16 +65,21 @@ export default function Search() {
     );
   });
 
-  const navigate = useNavigate();  // useNavigate 훅 사용
-
   // 검색창 핸들러
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  // 각 크리에이터 카드 클릭 시 상세 페이지로 이동
-  const handleCardClick = (id) => {
-    navigate(`/detail/${id}`);
+  // 각 크리에이터 카드 클릭 시 모달 열기
+  const handleCardClick = (creator) => {
+    setSelectedCreator(creator);
+    setModalOpen(true);
+  };
+
+  // 모달 닫기 핸들러
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedCreator(null);
   };
 
   // 아이템명 추출
@@ -122,7 +129,7 @@ export default function Search() {
           filteredCreators.map((creator, index) => (
             <CreatorCard 
               key={index}
-              onClick={() => handleCardClick(creator.id)} // 카드 클릭 시 handleCardClick 호출
+              onClick={() => handleCardClick(creator)} // 카드 클릭 시 handleCardClick 호출
             >
               {/* 이미지 */}
               <CardImageContainer>
@@ -155,6 +162,9 @@ export default function Search() {
           <NoResult>검색 결과가 없습니다.</NoResult>
         )}
       </CreatorListContainer>
+
+      {/* 모달 */}
+      <CreatorModal open={modalOpen} handleClose={handleCloseModal} creator={selectedCreator} />
     </Page>
   );
 }

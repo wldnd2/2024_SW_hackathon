@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import CreatorList from '../constants/CreatorList'; // 크리에이터 데이터 가져오기
 
 const Page = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
+  position: relative;
   width: 100%;
   max-width: 800px;
   padding: 0 20px;
@@ -115,13 +114,8 @@ export default function MatchingDetail() {
 
   useEffect(() => {
     // 데이터에서 해당 ID의 크리에이터를 찾아서 보여줌
-    fetch('/creators.json')
-      .then(response => response.json())
-      .then(data => {
-        const foundCreator = data.find((item) => item.id === parseInt(id));
-        setCreator(foundCreator);
-      })
-      .catch(error => console.error('Error fetching data:', error));
+    const foundCreator = CreatorList.find((item) => item.id === parseInt(id));
+    setCreator(foundCreator);
   }, [id]);
 
   if (!creator) {
