@@ -8,8 +8,7 @@
       "subregion": "동구",
       "year": 2021,
       "category": "지역가치",
-      "priceRange": "중간",
-      "productionCapacity": "소규모"
+      "imageUrl": "https://cdn.pixabay.com/photo/2023/10/28/11/52/dj-8347229_1280.jpg"
     },
     {
       "id": 2,
@@ -20,8 +19,7 @@
       "subregion": "남구",
       "year": 2021,
       "category": "로컬푸드",
-      "priceRange": "고가",
-      "productionCapacity": "대량"
+      "imageUrl": "https://pixabay.com/get/g3586707c1387b3403f90ea58cb79d7c6c8cd040ea901344f3bf928c0b20316dff45b436beeacf634f4f18813181d7252665ab82063c4ff055eeece18d2eab9ad_1280.jpg"
     },
     {
       "id": 3,
@@ -32,8 +30,7 @@
       "subregion": "중구",
       "year": 2021,
       "category": "로컬푸드",
-      "priceRange": "중간",
-      "productionCapacity": "소규모"
+      "imageUrl": "https://pixabay.com/get/g7793509343cb002b0a24e2e83662fd8e89708970e684ac2a907a76a10ea6aa390e7bbe06f24d9ebdd1836671ce76bb0befd8fd7eb822cfc53f1cf8f45639c702_1280.jpg"
     },
     {
       "id": 4,
@@ -44,8 +41,7 @@
       "subregion": "달서구",
       "year": 2021,
       "category": "로컬푸드",
-      "priceRange": "중간",
-      "productionCapacity": "대량"
+      "imageUrl": "https://pixabay.com/get/g77b879b383351676280112a33886d8f47b38d3b53a0241377c43117ff4d0b42e55b8b47c758b982635e9030521215242b04aedf4767722e99e35c69b3274700c_1280.jpg"
     },
     {
       "id": 5,
@@ -56,8 +52,7 @@
       "subregion": "남구",
       "year": 2021,
       "category": "지역가치",
-      "priceRange": "고가",
-      "productionCapacity": "소규모"
+      "imageUrl": "https://pixabay.com/get/g72a7a79e4d5ae5e02934dda0677bde7dfe57844d415a2ce2c8a68fbe292474c79d7a06fa79422905a8d285e3f7db120ae58fec51feecf1812c12855d5c136364_1280.jpg"
     },
     {
         "id": 6,
@@ -68,8 +63,7 @@
         "subregion": "중구",
         "year": 2021,
         "category": "지역기반제조",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "imageUrl": "https://pixabay.com/get/g1c87bc794c3787952442354b821740692cf47b5d9367c54d64d23d273615ec66b9f716ac4d6ebdec937f1e8b810e747d_1280.jpg"
     },
     {
         "id": 7,
@@ -80,8 +74,7 @@
         "subregion": "동구",
         "year": 2021,
         "category": "로컬푸드",
-        "priceRange": "중간",
-        "productionCapacity": "대량"
+        "imageUrl": "https://pixabay.com/get/ga35a5399a0536b4b53a2831b15ed2a00de10e130218dd5d18ba7cf4032ac2d26aa76422a9e93329679ec78c7cda8c29db663948db3d6c6c7454ca1f802d2c0fa_1280.jpg"
     },
     {
         "id": 8,
@@ -92,8 +85,7 @@
         "subregion": "남구",
         "year": 2021,
         "category": "지역기반제조",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "imageUrl": "https://pixabay.com/get/g30063f620007a4beb47c965dda03c64adc50c1c16574f4dfff5099b32a7472609b021163cdc3c5be60d085a5f207dc3739782af21f284d3c03af07c9237b439b_1280.jpg"
     },
     {
         "id": 9,
@@ -103,9 +95,7 @@
         "region": "대구광역시",
         "subregion": "동구",
         "year": 2021,
-        "category": "지역기반제조",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "category": "지역기반제조"
     },
     {
         "id": 10,
@@ -115,9 +105,7 @@
         "region": "대구광역시",
         "subregion": "남구",
         "year": 2020,
-        "category": "디지털문화체험",
-        "priceRange": "저가",
-        "productionCapacity": "대량"
+        "category": "디지털문화체험"
     },
     {
         "id": 11,
@@ -127,9 +115,7 @@
         "region": "대구광역시",
         "subregion": "동구",
         "year": 2020,
-        "category": "지역기반제조",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "category": "지역기반제조"
     },
     {
         "id": 12,
@@ -139,9 +125,7 @@
         "region": "대구광역시",
         "subregion": "중구",
         "year": 2020,
-        "category": "지역기반제조",
-        "priceRange": "고가",
-        "productionCapacity": "대량"
+        "category": "지역기반제조"
     },
     {
         "id": 13,
@@ -151,9 +135,7 @@
         "region": "대구광역시",
         "subregion": "중구",
         "year": 2020,
-        "category": "디지털문화체험",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "category": "디지털문화체험"
     },
     {
         "id": 14,
@@ -163,9 +145,7 @@
         "region": "대구광역시",
         "subregion": "북구",
         "year": 2020,
-        "category": "지역기반제조",
-        "priceRange": "중간",
-        "productionCapacity": "대량"
+        "category": "지역기반제조"
     },
     {
         "id": 15,
@@ -175,9 +155,7 @@
         "region": "대구광역시",
         "subregion": "달서구",
         "year": 2020,
-        "category": "지역가치",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "category": "지역가치"
     },
     {
         "id": 16,
@@ -187,9 +165,7 @@
         "region": "대구광역시",
         "subregion": "수성구",
         "year": 2020,
-        "category": "로컬푸드",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "category": "로컬푸드"
     },
     {
         "id": 17,
@@ -199,9 +175,7 @@
         "region": "대구광역시",
         "subregion": "동구",
         "year": 2020,
-        "category": "지역기반제조",
-        "priceRange": "중간",
-        "productionCapacity": "대량"
+        "category": "지역기반제조"
     },
     {
         "id": 18,
@@ -211,9 +185,7 @@
         "region": "대구광역시",
         "subregion": "중구",
         "year": 2020,
-        "category": "로컬푸드",
-        "priceRange": "중간",
-        "productionCapacity": "대량"
+        "category": "로컬푸드"
     },
     {
         "id": 19,
@@ -223,9 +195,7 @@
         "region": "대구광역시",
         "subregion": "북구",
         "year": 2020,
-        "category": "디지털문화체험",
-        "priceRange": "고가",
-        "productionCapacity": "소규모"
+        "category": "디지털문화체험"
     },
     {
         "id": 20,
@@ -235,9 +205,7 @@
         "region": "대구광역시",
         "subregion": "중구",
         "year": 2020,
-        "category": "지역가치",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "category": "지역가치"
     },
     {
         "id": 21,
@@ -247,9 +215,7 @@
         "region": "대구광역시",
         "subregion": "북구",
         "year": 2020,
-        "category": "지역기반제조",
-        "priceRange": "고가",
-        "productionCapacity": "대량"
+        "category": "지역기반제조"
     },
     {
         "id": 22,
@@ -259,9 +225,7 @@
         "region": "대구광역시",
         "subregion": "남구",
         "year": 2020,
-        "category": "거점브랜드",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "category": "거점브랜드"
     },
     {
         "id": 23,
@@ -271,9 +235,7 @@
         "region": "대구광역시",
         "subregion": "남구",
         "year": 2020,
-        "category": "지역기반제조",
-        "priceRange": "고가",
-        "productionCapacity": "소규모"
+        "category": "지역기반제조"
     },
     {
         "id": 24,
@@ -283,9 +245,7 @@
         "region": "대구광역시",
         "subregion": "북구",
         "year": 2020,
-        "category": "지역가치",
-        "priceRange": "중간",
-        "productionCapacity": "대량"
+        "category": "지역가치"
     },
     {
         "id": 25,
@@ -295,9 +255,7 @@
         "region": "대구광역시",
         "subregion": "남구",
         "year": 2022,
-        "category": "디지털문화체험",
-        "priceRange": "고가",
-        "productionCapacity": "소규모"
+        "category": "디지털문화체험"
     },
     {
         "id": 26,
@@ -307,9 +265,7 @@
         "region": "대구광역시",
         "subregion": "남구",
         "year": 2021,
-        "category": "로컬푸드",
-        "priceRange": "저가",
-        "productionCapacity": "소규모"
+        "category": "로컬푸드"
     },
     {
         "id": 27,
@@ -319,9 +275,7 @@
         "region": "대구광역시",
         "subregion": "중구",
         "year": 2022,
-        "category": "지역기반제조",
-        "priceRange": "중간",
-        "productionCapacity": "대량"
+        "category": "지역기반제조"
     },
     {
         "id": 28,
@@ -331,9 +285,7 @@
         "region": "대구광역시",
         "subregion": "달서구",
         "year": 2022,
-        "category": "디지털문화체험",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "category": "디지털문화체험"
     },
     {
         "id": 29,
@@ -343,9 +295,7 @@
         "region": "대구광역시",
         "subregion": "중구",
         "year": 2022,
-        "category": "거점브랜드",
-        "priceRange": "중간",
-        "productionCapacity": "대량"
+        "category": "거점브랜드"
     },
     {
         "id": 30,
@@ -355,9 +305,7 @@
         "region": "대구광역시",
         "subregion": "중구",
         "year": 2022,
-        "category": "지역가치",
-        "priceRange": "중간",
-        "productionCapacity": "소규모"
+        "category": "지역가치"
     },
     {
         "id": 31,
@@ -367,9 +315,7 @@
         "region": "대구광역시",
         "subregion": "북구",
         "year": 2021,
-        "category": "로컬푸드",
-        "priceRange": "중간",
-        "productionCapacity": "대량"
+        "category": "로컬푸드"
     },
     {
         "id": 32,
@@ -379,9 +325,7 @@
         "region": "대구광역시",
         "subregion": "남구",
         "year": 2023,
-        "category": "지역가치",
-        "priceRange": "고가",
-        "productionCapacity": "소규모"
+        "category": "지역가치"
     },
     {
         "id": 33,
@@ -391,9 +335,7 @@
         "region": "대구광역시",
         "subregion": "달서구",
         "year": 2023,
-        "category": "지역기반제조",
-        "priceRange": "고가",
-        "productionCapacity": "대량"
+        "category": "지역기반제조"
     },
     {
         "id": 34,
@@ -403,9 +345,7 @@
         "region": "대구광역시",
         "subregion": "달서구",
         "year": 2023,
-        "category": "로컬푸드",
-        "priceRange": "중간",
-        "productionCapacity": "대량"
+        "category": "로컬푸드"
     }
   ]
   
