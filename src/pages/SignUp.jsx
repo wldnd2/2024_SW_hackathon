@@ -93,6 +93,29 @@ const ErrorMessageWrap = styled.div`
     font-size: 12px;
 `;
 
+// 키워드 스타일
+const KeywordContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 16px;
+`;
+
+const KeywordButton = styled.button`
+    background-color: ${({ selected }) => (selected ? '#30b3f4' : '#f0f0f0')};
+    color: ${({ selected }) => (selected ? '#fff' : '#000')};
+    border: 1px solid #ccc;
+    border-radius: 24px;
+    padding: 8px 16px;
+    margin: 4px;
+    cursor: pointer;
+
+    &:disabled {
+        background-color: #dadada;
+        color: #fff;
+        cursor: not-allowed;
+    }
+`;
+
 export default function SignUp() {
   const [name, setName] = useState('');
   const [role, setRole] = useState('상인');
@@ -102,13 +125,17 @@ export default function SignUp() {
   const [emailValid, setEmailValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
   const [phoneValid, setPhoneValid] = useState(false);
+  const [selectedKeywords, setSelectedKeywords] = useState([]); // 선택된 키워드
   const navigate = useNavigate();
+
+  const keywords = ['트렌드', '가족', '여행', '문화', '스포츠', '음악', '음식', '자연', '기술', '건강'];
 
   useEffect(() => {
     setEmail('');
     setPw('');
     setPhone('');
   }, []);
+
   const handleEmail = (e) => {
     setEmail(e.target.value);
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -128,8 +155,16 @@ export default function SignUp() {
     setPhoneValid(regex.test(cleanedValue));
   };
 
+  const handleKeywordSelect = (keyword) => {
+    if (selectedKeywords.includes(keyword)) {
+      setSelectedKeywords(selectedKeywords.filter(k => k !== keyword));
+    } else if (selectedKeywords.length < 3) {
+      setSelectedKeywords([...selectedKeywords, keyword]);
+    }
+  };
+
   const handleSignUp = () => {
-    const userData = { name, role, email, pw };
+    const userData = { name, role, email, pw, phone, selectedKeywords };
     localStorage.setItem('user', JSON.stringify(userData));
     alert('회원가입이 완료되었습니다.');
     navigate('/login');
@@ -179,21 +214,38 @@ export default function SignUp() {
         </InputWrap>
         <ErrorMessageWrap>{!pwValid && pw.length > 0 && <div>영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.</div>}</ErrorMessageWrap>
         
-        <InputTitle>전화번호</InputTitle>  {/* 전화번호 입력 필드 추가 */}
+        <InputTitle>전화번호</InputTitle>  
         <InputWrap>
           <Input 
             type="text" 
-            placeholder= "010-XXXX-XXXX 또는 053-XXXX-XXXX"
+            placeholder="010-XXXX-XXXX 또는 053-XXXX-XXXX"
             value={phone} 
             onChange={handlePhone}
             autoComplete="off" />
         </InputWrap>
         <ErrorMessageWrap>{!phoneValid && phone.length > 0 && <div>올바른 전화번호를 입력해주세요.</div>}</ErrorMessageWrap>
+
+        <InputTitle>관심 키워드 (최대 3개 선택)</InputTitle>
+        <KeywordContainer>
+          {keywords.map((keyword) => (
+            <KeywordButton
+              key={keyword}
+              onClick={() => handleKeywordSelect(keyword)}
+              selected={selectedKeywords.includes(keyword)}
+              disabled={selectedKeywords.length >= 3 && !selectedKeywords.includes(keyword)}
+            >
+              {keyword}
+            </KeywordButton>
+          ))}
+        </KeywordContainer>
+        <ErrorMessageWrap>{selectedKeywords.length === 0 && <div>최소 1개의 키워드를 선택하세요.</div>}</ErrorMessageWrap>
       
       </ContentWrap>
 
       <div style={{ marginTop: "50px" }}>
-        <BottomButton onClick={handleSignUp} disabled={!emailValid || !pwValid || !phoneValid}>
+        <BottomButton 
+          onClick={handleSignUp} 
+          disabled={!emailValid || !pwValid || !phoneValid || selectedKeywords.length === 0}>
           회원가입
         </BottomButton>
       </div>
