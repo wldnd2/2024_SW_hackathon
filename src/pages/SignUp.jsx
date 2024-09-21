@@ -132,32 +132,12 @@ export default function SignUp() {
           autoComplete="off" />
         </InputWrap>
 
-        {/* <InputTitle>역할 선택</InputTitle>
+        <InputTitle>역할 선택</InputTitle>
         <InputWrap>
           <select className="input" value={role} onChange={(e) => setRole(e.target.value)}>
             <option value="상점">상점</option>
             <option value="크리에이터">로컬 크리에이터</option>
           </select>
-        </InputWrap> */}
-        <InputTitle>역할 선택</InputTitle>
-        <InputWrap>
-          <Select
-            value={role}
-            onChange={(e) => {
-              const selectedRole = e.target.value;
-              setRole(selectedRole);
-
-              // 상점을 선택했을 때 0, 로컬 크리에이터를 선택했을 때 1을 localStorage에 저장
-              if (selectedRole === "상점") {
-                localStorage.setItem("roleValue", 0);
-              } else if (selectedRole === "로컬 크리에이터") {
-                localStorage.setItem("roleValue", 1);
-              }
-            }}
-          >
-            <option value="상점">상점</option>
-            <option value="로컬 크리에이터">로컬 크리에이터</option>
-          </Select>
         </InputWrap>
 
         <InputTitle>이메일 주소</InputTitle>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/MyPage.css'; // Include your CSS file for layout and styles
 import StorePage from './StorePage'; // Import the store page component
 import CreatorPage from './CreatorPage';
@@ -37,9 +37,19 @@ export default function MyPage() {
     setPhoneNValid(regex.test(cleanedValue));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setNotAllow(!(nameValid && emailValid && phoneNValid));
   }, [nameValid, emailValid, phoneNValid]);
+
+  // 로컬 스토리지에서 사용자 정보 불러오기
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setName(storedUser.name);
+      setEmail(storedUser.email);
+      setEmailValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(storedUser.email)); // 이메일 로드 후 즉시 검증
+    }
+  }, []);
 
   const renderContent = () => {
     if (activePage === 'account') {
@@ -106,7 +116,7 @@ export default function MyPage() {
     } else if (activePage === 'store') {
       // Render the store page component
       return <StorePage />;
-    } else if (activePage == 'creator'){
+    } else if (activePage === 'creator') {
       return <CreatorPage />;
     }
   };
@@ -116,7 +126,7 @@ export default function MyPage() {
       {/* Sidebar */}
       <div className="sidebar">
         <div className="profile-section">
-          <div className="profile-name">김동주</div>
+          <div className="profile-name">{name}</div> {/* 자동으로 이름 표시 */}
           <div className="profile-status"></div>
         </div>
         <ul className="menu-list">
