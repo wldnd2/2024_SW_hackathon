@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate 추가
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,6 +12,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import styled from 'styled-components';
+import { getAuth, signOut, onAuthStateChanged } from 'firebase/auth'; // signOut 및 onAuthStateChanged 추가
+import app from '../firebase';
 
 const HeaderContainer = styled.div`
   padding-bottom: 5px;
@@ -26,6 +28,7 @@ const StyledDrawerList = styled.div`
 const StyledListItem = styled(ListItem)`
   &:hover {
     background-color: #e0e0e0;
+    cursor: pointer; 
   }
 `;
 
@@ -47,18 +50,71 @@ const FlexGrowDiv = styled.div`
   color: #000;
 `;
 
+const ProfileButton = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const ProfileImage = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+`;
+
+const UserName = styled.span`
+  font-size: 17px;
+  color: #000;
+  font-weight: bold;
+`;
+
 const Header = () => {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate(); // useNavigate 추가
+  
+  // Firebase 인증 인스턴스 가져오기
+  const auth = getAuth(app);
+
+  // 로그인한 사용자 정보 가져오기
+  useEffect(() => {
+    // Firebase Authentication에서 현재 로그인한 유저를 감지
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // 현재 로그인한 유저 정보 설정
+      } else {
+        setUser(null); // 로그아웃 시 null
+      }
+    });
+
+    return () => unsubscribe(); // 컴포넌트가 언마운트되면 리스너 정리
+  }, [auth]);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('user'); // localStorage에서 사용자 정보 삭제
-    alert('로그아웃 되었습니다.');
-    navigate('/'); // 로그아웃 후 홈으로 이동
+    signOut(auth)
+      .then(() => {
+        localStorage.removeItem('user');
+        alert('로그아웃 되었습니다.');
+        navigate('/');
+      })
+      .catch((error) => {
+        console.error('로그아웃 중 오류 발생:', error);
+        alert('로그아웃 중 오류가 발생했습니다.');
+      });
   };
 
   const DrawerList = (
@@ -76,15 +132,20 @@ const Header = () => {
           <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
           <StyledListItemText primary="My Page" />
         </StyledListItem>
-        <StyledListItem button={true} component={Link} to="/login" onClick={toggleDrawer(false)}>
-          <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
-          <StyledListItemText primary="Login" />
-        </StyledListItem>
-        {/* 로그아웃 버튼에 onClick 이벤트 추가 */}
-        <StyledListItem button={true} onClick={() => { handleLogout(); toggleDrawer(false)(); }}>
-          <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
-          <StyledListItemText primary="Logout" />
-        </StyledListItem>
+        {/* 로그인 상태에 따라 Login 버튼을 조건부로 렌더링 */}
+        {!user && (
+          <StyledListItem button={true} component={Link} to="/login" onClick={toggleDrawer(false)}>
+            <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
+            <StyledListItemText primary="Login" />
+          </StyledListItem>
+        )}
+        {/* 로그아웃 버튼도 로그인 상태에서만 보이도록 */}
+        {user && (
+          <StyledListItem button={true} onClick={() => { handleLogout(); toggleDrawer(false)(); }}>
+            <StyledListItemIcon><AccountCircleIcon /></StyledListItemIcon>
+            <StyledListItemText primary="Logout" />
+          </StyledListItem>
+        )}
       </List>
     </StyledDrawerList>
   );
@@ -93,8 +154,20 @@ const Header = () => {
     <HeaderContainer>
       <AppBar position="fixed" sx={{ backgroundColor: '#fff', borderRadius: "0 0 15px 15px" }}>
         <Toolbar>
-          <Logo src="https://www.daegu.go.kr/cmsh/daegu.go.kr/images/2023/common/logo_header_m.png" alt="Logo" />
+          <Link to="/">
+            <Logo src="https://www.daegu.go.kr/cmsh/daegu.go.kr/images/2023/common/logo_header_m.png" alt="Logo" />
+          </Link>
           <FlexGrowDiv />
+          {/* 프로필 이미지와 사용자 이름 표시 */}
+          {user && (
+            <ProfileButton onClick={() => navigate('/mypage')}>
+              <ProfileImage
+                src="https://img.freepik.com/free-psd/3d-rendering-avatar_23-2150833572.jpg"
+                alt="Profile"
+              />
+              <UserName>{user.displayName || user.email} 님</UserName>
+            </ProfileButton>
+          )}
           <MenuIcon onClick={toggleDrawer(true)} sx={{ color: '#000' }} />
           <Drawer open={open} onClose={toggleDrawer(false)}>
             {DrawerList}
@@ -104,6 +177,6 @@ const Header = () => {
       <Toolbar /> {/* This is to offset the content below the AppBar */}
     </HeaderContainer>
   );
-}
+};
 
 export default Header;
