@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 .yarnrc.yml
 .yarn/
+daeguhackathon.json
