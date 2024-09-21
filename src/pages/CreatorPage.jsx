@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/MyPage.css'; // 동일한 CSS 사용
 
 export default function CreatorPage() {
   const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
+  const [category] = useState('');
   const [location, setLocation] = useState('');
   const [phoneN, setPhoneN] = useState('');
   const [bio, setBio] = useState(''); // 자기소개란 추가
   const [notAllow, setNotAllow] = useState(true);
 
   const [nameValid, setNameValid] = useState(false);
-  const [categoryValid, setCategoryValid] = useState(true); // Assuming category is valid
+  // const [categoryValid, setCategoryValid] = useState(true); // Assuming category is valid
   const [phoneNValid, setPhoneNValid] = useState(false);
   const [bioValid, setBioValid] = useState(true); // 자기소개 유효성 초기값 설정
 

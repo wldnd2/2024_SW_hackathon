@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/MyPage.css'; // 동일한 CSS 사용
 
 export default function StorePage() {
   const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
+  const [category] = useState('');
   const [location, setLocation] = useState('');
   const [phoneN, setPhoneN] = useState('');
   const [email, setEmail] = useState('');
   const [notAllow, setNotAllow] = useState(true);
 
   const [nameValid, setNameValid] = useState(false);
-  const [categoryValid, setCategoryValid] = useState(true); // Assuming category is valid
+  // const [categoryValid, setCategoryValid] = useState(true); // Assuming category is valid
   const [phoneNValid, setPhoneNValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
 
@@ -24,7 +24,7 @@ export default function StorePage() {
   const handleEmail = (e) => {
     setEmail(e.target.value);
     const regex =
-      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     setEmailValid(regex.test(email));
   };
 

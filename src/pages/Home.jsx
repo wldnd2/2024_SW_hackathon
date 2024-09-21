@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import ItemSlider from '../components/ItemSlider';
-import MainCard from '../components/MainCard';
-import { MainCardInfo } from '../constants/MainCardInfo';
+// import MainCard from '../components/MainCard';
+// import { MainCardInfo } from '../constants/MainCardInfo';
 import Footer from '../components/Footer';
 
 const Container = styled.div`
@@ -9,18 +9,18 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-const MainCardContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-`;
+// const MainCardContainer = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const Home = () => {
   return (
     <Container>
       <ItemSlider />
-      <MainCardContainer>
+      {/* <MainCardContainer>
         {MainCardInfo.map((card, index) => {
           return (
             <MainCard
@@ -32,7 +32,7 @@ const Home = () => {
             />
           );
         })}
-      </MainCardContainer>
+      </MainCardContainer> */}
       <Footer />
     </Container>
   );
