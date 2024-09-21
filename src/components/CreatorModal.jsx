@@ -73,6 +73,10 @@ const CreatorModal = ({ open, handleClose, creator }) => {
   const navigate = useNavigate();
   if (!creator) return null; // creator가 존재하지 않을 경우 null 반환
 
+  const handleApplyClick = () => {
+    navigate('/apply', { state: { creatorId: creator.id } });
+  };
+
   return (
     <Modal
       open={open}
@@ -104,7 +108,7 @@ const CreatorModal = ({ open, handleClose, creator }) => {
         </StyledDescriptionContainer>
         <Typography variant="h6" component="h2">추천 상품</Typography>
         <ItemContainer />
-        <ApplyButton onClick={() => navigate('/apply')}>협업 신청</ApplyButton>
+        <ApplyButton onClick={handleApplyClick}>협업 신청</ApplyButton>
       </StyledBox>
     </Modal>
   );
@@ -114,6 +118,7 @@ CreatorModal.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   creator: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     imageUrl: PropTypes.string,
     category: PropTypes.string,

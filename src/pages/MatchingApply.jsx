@@ -1,12 +1,11 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import CreatorList from '../constants/CreatorList'; // CreatorList 가져오기
 
 import '../styles/index.css';
 
 export default function MatchingApply() {
-
   const navigate = useNavigate();  // useNavigate 훅 사용
-
   const location = useLocation();
   const { creatorId } = location.state || {};  // 전달된 creatorId 받기
   const [creator, setCreator] = useState(null);
@@ -17,18 +16,13 @@ export default function MatchingApply() {
   const [collabMethod, setCollabMethod] = useState('');
   const [budget, setBudget] = useState('');
   const [timeline, setTimeline] = useState('');
-  const [files, setFiles] = useState(null);
+  // const [files, setFiles] = useState(null);
 
-  // creatorId가 있을 경우 해당 데이터를 JSON 파일에서 가져오기
+  // creatorId가 있을 경우 해당 데이터를 CreatorList에서 가져오기
   useEffect(() => {
     if (creatorId) {
-      fetch('/creators.json')
-        .then(response => response.json())
-        .then(data => {
-          const foundCreator = data.find((item) => item.id === creatorId);
-          setCreator(foundCreator);
-        })
-        .catch(error => console.error('Error fetching data:', error));
+      const foundCreator = CreatorList.find((item) => item.id === creatorId);
+      setCreator(foundCreator);
     }
   }, [creatorId]);
 
@@ -53,7 +47,7 @@ export default function MatchingApply() {
     }
     navigate('/');  // '/' 경로로 이동
   };
-  
+
   return (
     <div className="page">
       <div className="titleWrap">
@@ -138,15 +132,14 @@ export default function MatchingApply() {
         </div>
 
         {/* 파일 업로드 */}
-        <div className='inputTitle'>디자인 참고 자료 업로드</div>
+        {/* <div className='inputTitle'>디자인 참고 자료 업로드</div>
         <div className='fileWrap'>
           <input
             type='file'
             className='file'
             multiple
             onChange={(e) => setFiles(e.target.files)} />
-        </div>
-
+        </div> */}
 
         <div className="bottomButtonWrap">
           <button 
@@ -155,7 +148,7 @@ export default function MatchingApply() {
             신청
           </button>
         </div>
-              </div>
+      </div>
     </div>
-  )
+  );
 }
