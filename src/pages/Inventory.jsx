@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import PersonCard from '../components/PersonCard';
+import ProfileCard from '../components/ProfileCard.jsx';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -17,7 +17,7 @@ const Inventory = ({ infomations }) => {
   return (
     <Container>
       {infomations.map((info, index) => (
-        <PersonCard key={index} person={info} />
+        <ProfileCard key={index} person={info} />
       ))}
     </Container>
   );

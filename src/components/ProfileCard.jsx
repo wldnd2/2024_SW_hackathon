@@ -8,7 +8,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 
-const PersonCard = ({ person }) => {
+const ProfileCard = ({ person }) => {
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       <ListItem alignItems="flex-start">
@@ -36,7 +36,7 @@ const PersonCard = ({ person }) => {
   );
 }
 
-PersonCard.propTypes = {
+ProfileCard.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,
     imgPath: PropTypes.string,
@@ -44,4 +44,4 @@ PersonCard.propTypes = {
   }).isRequired,
 };
 
-export default PersonCard;
+export default ProfileCard;
