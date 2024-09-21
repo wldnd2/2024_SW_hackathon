@@ -15,6 +15,14 @@ const MainCardContainer = styled.div`
   align-items: center;
 `;
 
+const Footer = styled.footer`
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: auto;
+`;
+
 const Home = () => {
   return (
     <Container>
@@ -32,6 +40,9 @@ const Home = () => {
           );
         })}
       </MainCardContainer>
+      <Footer>
+        &copy; 2024 Your Company Name. All rights reserved.
+      </Footer>
     </Container>
   );
 };
