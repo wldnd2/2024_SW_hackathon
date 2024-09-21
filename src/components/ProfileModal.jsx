@@ -2,6 +2,7 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom'; // useNavigate 훅 임포트
 import { ItemInfo } from '../constants/ItemInfo'; // named import 사용
 
 const StyledBox = styled.div`
@@ -31,18 +32,47 @@ const StyledImage = styled.img`
   border-radius: 10px;
 `;
 
+const StyledTitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px;
+  width: 100%;
+`;
+
+const StyledDescriptionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  width: 100%;
+`;
+
 const StyledTitle = styled(Typography)`
   font-size: 26px;
   font-weight: 700;
   color: #262626;
-  margin-bottom: 16px;
 `;
 
 const StyledDescription = styled(Typography)`
   font-size: 14px;
   color: #555;
   text-align: center;
-  margin-bottom: 16px;
+`;
+
+const ApplyButton = styled.button`
+  width: 100px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
 
 const ItemContainer = styled.div`
@@ -57,12 +87,13 @@ const ItemContainer = styled.div`
 const ItemCard = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: start;
   background-color: white;
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 150px;
-  text-align: center;
+  text-align: left;
   transition: box-shadow 0.2s;
   overflow-y: auto; /* 세로 스크롤 활성화 */
   max-height: 300px; /* 최대 높이 설정 */
@@ -79,6 +110,12 @@ const ItemImage = styled.img`
 `;
 
 const ProfileModal = ({ open, handleClose, person }) => {
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
+  const handleApplyClick = () => {
+    navigate('/apply');
+  };
+
   return (
     <Modal
       open={open}
@@ -88,12 +125,18 @@ const ProfileModal = ({ open, handleClose, person }) => {
     >
       <StyledBox>
         <StyledImage src={person.imgPath} alt={person.name} />
-        <StyledTitle id="profile-modal-title" variant="h6" component="h2">
-          {person.name}
-        </StyledTitle>
-        <StyledDescription id="profile-modal-description">
-          {person.description}
-        </StyledDescription>
+        <StyledTitleContainer>
+          <StyledDescriptionContainer>
+            <StyledTitle id="profile-modal-title" variant="h6" component="h2">
+              {person.name}
+            </StyledTitle>
+            <StyledDescription id="profile-modal-description">
+              {person.description}
+            </StyledDescription>
+          </StyledDescriptionContainer>
+          <ApplyButton onClick={handleApplyClick}>협업 신청</ApplyButton>
+        </StyledTitleContainer>
+        <Typography variant="h6" component="h2" marginTop={'20px'}>추천 상품</Typography>
         <ItemContainer>
           {ItemInfo.map((item) => (
             <ItemCard key={item.title}>
@@ -101,7 +144,7 @@ const ProfileModal = ({ open, handleClose, person }) => {
               <Typography variant="body2" fontWeight="bold">{item.title}</Typography>
               <Typography variant="body2" color="textSecondary">{item.maker}</Typography>
               <Typography variant="body2" color="primary">{item.price}원</Typography>
-              <Typography variant="body2">{item.description}</Typography>
+              <Typography variant="body2" fontSize={'12px'} marginTop={'5px'}>{item.description}</Typography>
             </ItemCard>
           ))}
         </ItemContainer>
