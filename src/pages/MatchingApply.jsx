@@ -1,7 +1,11 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CreatorList from '../constants/CreatorList'; // CreatorList 가져오기
+import CreatorList from '../constants/CreatorList';  // CreatorList 가져오기
+import { ref, set } from 'firebase/database';  // Firebase Realtime Database 관련
+import { getAuth, onAuthStateChanged } from 'firebase/auth';  // Firebase 인증 관련
+import { db } from '../firebase';  // Firebase 설정 파일 import
+import { format } from 'date-fns';  // 날짜 포맷을 위한 라이브러리
 
 const Page = styled.div`
   position: absolute;
@@ -13,8 +17,8 @@ const Page = styled.div`
   left: 50%;
   transform: translate(-49%, 0);
   background-color: #F7F7F7;
-  overflow-y: auto;  /* 세로 스크롤을 가능하게 함 */
-  overflow-x: hidden; /* 가로 스크롤은 숨김 */
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 `;
@@ -67,7 +71,7 @@ const Input = styled.input`
   height: 17px;
   font-size: 14px;
   font-weight: 400;
-  padding: 8px;  /* 텍스트 입력 시 여백을 줘서 가독성 향상 */
+  padding: 8px;
 
   &::placeholder {
     color: #dadada;
@@ -80,7 +84,6 @@ const BottomButtonWrap = styled.div`
   width: 100%;
   text-align: center;
   padding: 10px 0;
-  position: sticky; /* 버튼을 하단에 고정 */
 `;
 
 const BottomButton = styled.button`
@@ -93,8 +96,6 @@ const BottomButton = styled.button`
   color: white;
   margin-bottom: 16px;
   cursor: pointer;
-  position: sticky; /* 버튼을 하단에 고정 */
-  bottom: 0;
 
   &:disabled {
     background-color: #dadada;
@@ -149,6 +150,7 @@ export default function MatchingApply() {
   const location = useLocation();
   const { creatorId } = location.state || {};  // 전달된 creatorId 받기
   const [creator, setCreator] = useState(null);
+  const [user, setUser] = useState(null);  // 사용자 정보 상태
 
   const [storeName, setStoreName] = useState('');
   const [contactInfo, setContactInfo] = useState('');
@@ -156,9 +158,23 @@ export default function MatchingApply() {
   const [collabMethod, setCollabMethod] = useState('');
   const [budget, setBudget] = useState('');
   const [timeline, setTimeline] = useState('');
-  // const [files, setFiles] = useState(null);
 
-  // creatorId가 있을 경우 해당 데이터를 CreatorList에서 가져오기
+  const auth = getAuth();  // Firebase 인증
+
+  // Firebase 인증 상태 감지
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);  // 로그인한 사용자 설정
+      } else {
+        setUser(null);  // 로그아웃 상태
+      }
+    });
+
+    return () => unsubscribe();  // 컴포넌트 언마운트 시 정리
+  }, [auth]);
+
+  // creatorId가 있을 경우 CreatorList에서 데이터 가져오기
   useEffect(() => {
     if (creatorId) {
       const foundCreator = CreatorList.find((item) => item.id === creatorId);
@@ -172,29 +188,49 @@ export default function MatchingApply() {
 
   const extractedText = creator.item.match(/“([^“”]+)”/)[1];
 
-  // 버튼 클릭 시 home 이동
-  const handleSubmit = () => {
-    if (creator && creator.name) {
-      // 기존 로컬 스토리지에서 "매칭 신청한 로컬 크리에이터" 데이터를 가져옴
-      const storedCreators = JSON.parse(localStorage.getItem('매칭 신청한 로컬 크리에이터')) || [];
-
-      // 새로운 크리에이터 이름을 배열에 추가
-      const updatedCreators = [...storedCreators, creator.name];
-
-      // 배열을 로컬 스토리지에 저장
-      localStorage.setItem('매칭 신청한 로컬 크리에이터', JSON.stringify(updatedCreators));
-      console.log('Updated creator list saved to localStorage:', updatedCreators);
+  const handleSubmit = async () => {
+    if (!user) {
+      alert("로그인 후 신청할 수 있습니다.");
+      return;
     }
-    navigate('/');  // '/' 경로로 이동
+  
+    const applicationDate = format(new Date(), 'yyyy-MM-dd');
+    const applicationTime = format(new Date(), 'HH:mm:ss');
+  
+    try {
+      const userId = user.uid;
+      const newApplicationRef = ref(db, `users/${userId}/applications/${creator.id}`);
+      await set(newApplicationRef, {
+        creatorName: creator.name,
+        date: applicationDate,
+        time: applicationTime,
+        status: 'pending',  // 신청 상태: 대기
+        storeName,
+        contactInfo,
+        collabProposal,
+        collabMethod,
+        budget,
+        timeline,
+      });
+  
+      alert("신청이 완료되었습니다.");
+  
+      // 2초 후에 홈 페이지로 이동
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
+  
+    } catch (error) {
+      console.error("Error saving application:", error);
+      alert("신청 중 오류가 발생했습니다.");
+    }
   };
+  
 
   return (
     <Page>
-      <TitleWrap>
-        매칭 신청 작성 페이지
-      </TitleWrap>
+      <TitleWrap>매칭 신청 작성 페이지</TitleWrap>
 
-      {/* 크리에이터 정보 출력 */}
       <CreatorDetailsContainer>
         <CreatorImage src={creator.imageUrl} alt={creator.name} />
         <CreatorDetails>
@@ -209,7 +245,6 @@ export default function MatchingApply() {
 
       <ContentWrap>
         <InputTitle1>협업 제안서</InputTitle1>
-        
         {/* 상점 정보 입력 */}
         <InputTitle>상점 이름</InputTitle>
         <InputWrap>
@@ -269,18 +304,8 @@ export default function MatchingApply() {
             onChange={(e) => setTimeline(e.target.value)} />
         </InputWrap>
 
-        {/* 파일 업로드 */}
-        {/* <InputTitle>디자인 참고 자료 업로드</InputTitle>
-        <FileWrap>
-          <Input
-            type='file'
-            multiple
-            onChange={(e) => setFiles(e.target.files)} />
-        </FileWrap> */}
-
         <BottomButtonWrap>
-          <BottomButton 
-            onClick={handleSubmit}>
+          <BottomButton onClick={handleSubmit}>
             신청
           </BottomButton>
         </BottomButtonWrap>
