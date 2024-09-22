@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Match Result</title>
+</head>
+<body>
+    <h1>유사도가 높은 10개의 크리에이터</h1>
+    <table border="1">
+        <tr>
+            <th>크리에이터명</th>
+            <th>유사도</th>
+        </tr>
+        {% for creator in creators %}
+        <tr>
+            <td>{{ creator['크리에이터명'] }}</td>
+            <td>{{ creator['유사도'] }}%</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/">다시 매칭하기</a>
+</body>
+</html>
