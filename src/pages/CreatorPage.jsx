@@ -103,6 +103,11 @@ export default function CreatorPage() {
             readOnly // 수정할 수 없도록 readOnly 추가
           />
         </div>
+
+        {/* 이미지 추가 */}
+        <div className="image-container">
+          <img src="https://i.postimg.cc/9MTnccFr/image.png" alt="크리에이터 이미지" className="creator-image" />
+        </div>
       </div>
     </div>
   );

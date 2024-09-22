@@ -106,3 +106,11 @@
 h1{
   margin-bottom: 30px;
 }
+
+.creator-image {
+  width: 100%; /* 이미지 너비 조정 */
+  max-width: 800px; /* 최대 너비 */
+  height: auto; /* 비율 유지 */
+  display: block;
+  margin: 20px auto; /* 가운데 정렬 */
+}
