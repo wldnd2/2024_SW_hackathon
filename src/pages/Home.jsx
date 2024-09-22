@@ -16,7 +16,6 @@ const Container = styled.div`
 
 const Home = () => {
   const [user, setUser] = useState(null);
-
   const [userKeywords] = useState([]);
 
   // Firebase 인증 인스턴스 가져오기
@@ -40,24 +39,27 @@ const Home = () => {
     <Container>
       <ItemSlider />
 
-       {/* 유저가 로그인한 상태일 때 사용자 정보 표시 */}
-        {user && (
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <h2>Welcome, {user.displayName || 'User'}!</h2> {/* 유저 이름 출력 */}
-          <p>Email: {user.email}</p> {/* 유저 이메일 출력 */}
-        </div>
+      {/* 유저가 로그인한 상태일 때 사용자 정보 표시 */}
+      {user && (
+        <>
+          <div style={{ marginTop: '20px', textAlign: 'center' }}>
+            <h2>Welcome, {user.displayName || 'User'}!</h2> {/* 유저 이름 출력 */}
+            <p>Email: {user.email}</p> {/* 유저 이메일 출력 */}
+          </div>
+
+          {userKeywords.length > 0 && (
+            <div>
+              <h3>Your Keywords:</h3>
+              {userKeywords.map((keyword, index) => (
+                <span key={index}>{keyword}</span>
+              ))}
+            </div>
+          )}
+
+          <KeywordListComponent />
+          <CreatorListComponent />
+        </>
       )}
-      
-      {userKeywords.length > 0 && (
-        <div>
-          <h3>Your Keywords:</h3>
-          {userKeywords.map((keyword, index) => (
-            <span key={index}>{keyword}</span>
-          ))}
-        </div>
-      )}
-      <KeywordListComponent />
-      <CreatorListComponent />
       <Footer />
     </Container>
   );
