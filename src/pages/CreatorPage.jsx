@@ -114,6 +114,11 @@ export default function CreatorPage() {
           >
             {phoneN}
           </a>
+
+        {/* 이미지 추가 */}
+        <div className="image-container">
+          <img src="https://i.postimg.cc/9MTnccFr/image.png" alt="크리에이터 이미지" className="creator-image" />
+        </div>
       </div>
     </div>
   );
