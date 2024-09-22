@@ -5,6 +5,8 @@ import CreatorPage from './CreatorPage';
 import MatchingPage from './MatchingPage';
 import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Firebase Auth 관련 import
 import app from '../firebase';
+import { ref, onValue } from 'firebase/database';
+import { db } from '../firebase';
 
 export default function MyPage() {
   // State to track which page content to show
@@ -19,23 +21,28 @@ export default function MyPage() {
   const [emailValid, setEmailValid] = useState(false);
   const [phoneNValid, setPhoneNValid] = useState(false);
 
-  const [user, setUser] = useState(null);
-
   const auth = getAuth(app);
+  const user = auth.currentUser;
+  const [userInfo, setUserInfo] = useState({ name: '', email: '', phone: '' });
+
 
   // 로그인한 사용자 정보 가져오기
   useEffect(() => {
-    // Firebase Authentication에서 현재 로그인한 유저를 감지
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser); // 현재 로그인한 유저 정보 설정
-      } else {
-        setUser(null); // 로그아웃 시 null
-      }
-    });
-
-    return () => unsubscribe(); // 컴포넌트가 언마운트되면 리스너 정리
-  }, [auth]);
+    if (user) {
+      // Firebase Realtime Database에서 해당 유저의 정보를 가져옴
+      const userRef = ref(db, 'users/' + user.uid);
+      onValue(userRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          setUserInfo({
+            name: data.name || '',
+            email: user.email, // email은 auth에서 가져옴
+            phone: data.phone || '', // phone 번호도 가져옴
+          });
+        }
+      });
+    }
+  }, [user]);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -76,7 +83,7 @@ export default function MyPage() {
             <input
               type="text"
               className="input"
-              placeholder={user.displayName}
+              placeholder={userInfo.name}
               value={name}
               onChange={handleName}
             />
@@ -92,7 +99,7 @@ export default function MyPage() {
             <input
               type="email"
               className="input"
-              placeholder={user.email}
+              placeholder={userInfo.email}
               value={email}
               onChange={handleEmail}
             />
@@ -108,7 +115,7 @@ export default function MyPage() {
             <input
               type="text"
               className="input"
-              placeholder={user.email}
+              placeholder={userInfo.phone}
               value={phoneN}
               onChange={handlePhoneN}
             />
