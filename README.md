@@ -48,12 +48,19 @@ ex)
 
 ### 구현 방식
 
-어떤 언어와 프레임워크를 사용했는지, 만약 배포를 진행했다면 환경은 어떤지 등을 기재
-ex) 프론트엔드로는 TypeScript와 React를 사용, 백엔드로는 Java와 Spring을 사용. AWS를 통해 배포를 진행
+- Frontend
+  - Vite / React (JS) / Material UI / Styled-components
+- Backend
+  - Python / Flask / Jupyter Notebook
+  - SBERT (SentenceTransformer) AI Model
+- Database
+  - Firebase
+- Deployment
+  - Vercel
 
 <!-- ![setting](https://github.com/user-attachments/assets/2411066f-c74b-42b8-af53-28f566aaedca) -->
 
-![development](image.png)
+![development](./assets/image.png)
 
 ## 향후 개선 혹은 발전 방안
 
