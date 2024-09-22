@@ -14,8 +14,7 @@
 | 팀장 [📨](mailto:jun000628@naver.com) | 팀원 [📨](mailto:kdj4303@naver.com) | 팀원 [📨](mailto:yoonwoorin13@knu.ac.kr) | 팀원 [📨](mailto:hse2089@naver.com) |
 
 ## 시연 영상
-[서비스 시연 영상 링크 (추가 예정)]  
-(선택) [Github Repository](https://github.com/your-repo)에서 직접 확인 가능.
+[📽️ 유투브 시연 영상 링크](https://youtu.be/EbfnMWKCPTE)에서 직접 확인 가능.
 
 ## 서비스 소개
 
