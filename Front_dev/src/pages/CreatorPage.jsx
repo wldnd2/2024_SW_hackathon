@@ -117,7 +117,7 @@ export default function CreatorPage() {
 
         {/* 이미지 추가 */}
         <div className="image-container">
-          <img src="https://postfiles.pstatic.net/MjAyNDA5MjJfMjYx/MDAxNzI2OTkxNTIzODc3.51WOWriC9Y7Gbo24u3SjlvCBIlmRWGK_UG0gaOI0vo4g.8ZJFomGcSM57qWlWl6fi8LZT8qGyFSpKzeIHoebBU8cg.PNG/image.png?type=w773" alt="크리에이터 이미지" className="creator-image" />
+          <img src="https://i.postimg.cc/9MTnccFr/image.png" className="creator-image" />
         </div>
       </div>
     </div>
