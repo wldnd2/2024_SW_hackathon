@@ -105,7 +105,7 @@ const CreatorListComponent = () => {
   return (
     <Container>
       <Typography variant="h4" component="div" gutterBottom>
-        유사도 크리에이터 목록
+        추천 크리에이터 목록
       </Typography>
       <List>
         {similarityCreator.length > 0 ? (

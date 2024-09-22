@@ -85,7 +85,7 @@ export default function CreatorPage() {
             readOnly // 수정할 수 없도록 readOnly 추가
           />
         </div>
-        <div className="inputTitle">홈페이지</div>
+        {/* <div className="inputTitle">홈페이지</div>
         <div className="inputWrap">
           <input
             type="text"
@@ -93,16 +93,27 @@ export default function CreatorPage() {
             value={phoneN}
             readOnly // 수정할 수 없도록 readOnly 추가
           />
+        </div> */}
         </div>
         <div className="inputTitle">아이템 설명</div>
         <div className="inputWrap">
-          <input
-            type="text"
-            className="input"
+          <textarea
+            className="input bio-textarea"
             value={bio}
             readOnly // 수정할 수 없도록 readOnly 추가
+            style={{ height: '100px' }} // 높이를 100px로 설정하여 적당한 크기로 조정
           />
         </div>
+        <div className="inputTitle">홈페이지</div>
+        <div className="inputWrap">
+          <a
+            href={phoneN} // 홈페이지 URL을 해당 변수로 설정
+            className="homepage-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {phoneN}
+          </a>
       </div>
     </div>
   );

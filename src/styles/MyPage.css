@@ -106,3 +106,9 @@
 h1{
   margin-bottom: 30px;
 }
+
+.homepage-link {
+  color: blue;
+  text-decoration: underline;
+}
+
