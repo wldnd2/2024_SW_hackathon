@@ -1,5 +1,3 @@
-*Here's a README based on your project plan:
-
 # 밀레니엄베이비즈 - 로컬 협업 매칭 플랫폼
 
 ## 서비스 요약
