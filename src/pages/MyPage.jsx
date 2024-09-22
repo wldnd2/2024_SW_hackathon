@@ -149,7 +149,7 @@ export default function MyPage() {
         <ul className="menu-list">
           <li onClick={() => setActivePage('account')}>회원 정보</li>
           <li onClick={() => setActivePage('store')}>내 상점 정보</li>
-          <li onClick={() => setActivePage('creator')}>내 크리에이터 정보</li>
+          <li onClick={() => setActivePage('creator')}>최근 신청한 크리에이터</li>
           <li onClick={() => setActivePage('matching')}>매칭 기록</li>
         </ul>
       </div>

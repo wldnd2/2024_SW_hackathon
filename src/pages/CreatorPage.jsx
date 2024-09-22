@@ -2,17 +2,29 @@ import { useState, useEffect } from 'react';
 import '../styles/MyPage.css'; // 동일한 CSS 사용
 
 export default function CreatorPage() {
-  const [name, setName] = useState('');
-  const [category] = useState('');
+  const [name, setName] = useState('');  // 로컬 크리에이터 이름
+  const [category, setCategory] = useState(''); // 상태로 변경
   const [location, setLocation] = useState('');
   const [phoneN, setPhoneN] = useState('');
   const [bio, setBio] = useState(''); // 자기소개란 추가
   const [notAllow, setNotAllow] = useState(true);
 
   const [nameValid, setNameValid] = useState(false);
-  // const [categoryValid, setCategoryValid] = useState(true); // Assuming category is valid
   const [phoneNValid, setPhoneNValid] = useState(false);
   const [bioValid, setBioValid] = useState(true); // 자기소개 유효성 초기값 설정
+
+  // 로컬 스토리지에서 크리에이터 정보를 불러오는 useEffect
+  useEffect(() => {
+    const storedCreatorInfo = localStorage.getItem('creatorInfo');
+    if (storedCreatorInfo) {
+      const parsedInfo = JSON.parse(storedCreatorInfo);
+      setName(parsedInfo.creatorName || '');  // creator.name 자동 입력 추가
+      setCategory(parsedInfo.category || '');
+      setLocation(parsedInfo.item || ''); // 'location' 대신 'item'이 저장된 값
+      setBio(parsedInfo.itemDescription || ''); // 'bio'에 item 설명을 넣음
+      setPhoneN(parsedInfo.homepage || ''); // 'phoneN' 대신 homepage를 사용
+    }
+  }, []);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -45,77 +57,51 @@ export default function CreatorPage() {
   return (
     <div className="profile-form">
       <div className="profile-form">
-        <h1>크리에이터 정보</h1>
-        <div className="inputTitle">닉네임</div>
+        <h1>최근 신청한 크리에이터</h1>
+        <div className="inputTitle">로컬 크리에이터</div>
         <div className="inputWrap">
           <input
             type="text"
             className="input"
-            placeholder="닉네임을 입력하세요"
-            value={name}
-            onChange={handleName}
+            value={name}  // 로컬 크리에이터 이름이 자동 입력
+            readOnly
           />
         </div>
-        <div className="errorMessageWrap">
-          {!nameValid && name.length > 0 && (
-            <div>닉네임을 입력해주세요.</div>
-          )}
-        </div>
-        <div className="inputTitle">주요 작업 분야</div>
+        <div className="inputTitle">7대 분야</div>
         <div className="inputWrap">
           <input
             type="text"
             className="input"
-            placeholder="작업 분야를 입력하세요"
             value={category}
             readOnly
           />
         </div>
-        <div className="inputTitle">경험 및 이력</div>
+        <div className="inputTitle">아이템</div>
         <div className="inputWrap">
           <input
             type="text"
             className="input"
-            placeholder="이전 협업 사례, 자격증/수상경력을 입력하세요"
             value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            readOnly // 수정할 수 없도록 readOnly 추가
           />
         </div>
-        <div className="inputTitle">프로필 링크</div>
+        <div className="inputTitle">홈페이지</div>
         <div className="inputWrap">
           <input
             type="text"
             className="input"
-            placeholder="Instagram, Youtube 등 외부 링크를 입력하세요."
             value={phoneN}
-            onChange={handlePhoneN}
+            readOnly // 수정할 수 없도록 readOnly 추가
           />
         </div>
-        <div className="errorMessageWrap">
-          {!phoneNValid && phoneN.length > 0 && (
-            <div>올바른 전화번호를 입력해주세요.</div>
-          )}
-        </div>
-        <div className="inputTitle">크리에이터 소개</div>
+        <div className="inputTitle">아이템 설명</div>
         <div className="inputWrap">
-          <textarea
-            className="input bio-textarea" // bio-textarea 클래스 추가
-            placeholder="500자 이내로 입력하세요."
+          <input
+            type="text"
+            className="input"
             value={bio}
-            onChange={handleBio}
+            readOnly // 수정할 수 없도록 readOnly 추가
           />
-        </div>
-        <div className="errorMessageWrap">
-          {!bioValid && (
-            <div>500자를 초과하였습니다.</div>
-          )}
-        </div>
-        <div>
-          <button
-            disabled={notAllow}
-            className="bottomButton">
-            다음
-          </button>
         </div>
       </div>
     </div>

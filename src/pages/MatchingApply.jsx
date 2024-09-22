@@ -197,6 +197,14 @@ export default function MatchingApply() {
   
     const applicationDate = format(new Date(), 'yyyy-MM-dd');
     const applicationTime = format(new Date(), 'HH:mm:ss');
+    const creatorInfo = {
+      creatorName: creator.name,
+      category: creator.category,
+      item: extractedText,
+      homepage: creator.homepage,
+      itemDescription: creator.item
+    };
+    localStorage.setItem('creatorInfo', JSON.stringify(creatorInfo));
   
     try {
       const userId = user.uid;

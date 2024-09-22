@@ -5,12 +5,12 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { db } from '../firebase';  // Firebase 설정에 맞게 수정 필요
 
 const PageContainer = styled.div`
-  padding: 20px;
+  padding: 10px;
   font-family: Arial, sans-serif;
 `;
 
 const StyledTable = styled.table`
-  width: 100%;
+  width: 110%;
   border-collapse: collapse;
   margin: 20px 0;
   font-size: 18px;
@@ -28,11 +28,11 @@ const TableRow = styled.tr`
 `;
 
 const TableHeader = styled.th`
-  padding: 20px 15px;
+  padding: 10px 5px;
   border: 1px solid #ddd;
   background-color: #f4f4f4;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 const TableData = styled.td`
@@ -98,9 +98,9 @@ export default function MatchingPage() {
           <thead>
             <TableRow>
               <TableHeader>로컬 크리에이터</TableHeader>
-              <TableHeader>신청 날짜</TableHeader>
-              <TableHeader>신청 시간</TableHeader>
-              <TableHeader>신청 현황</TableHeader>
+              <TableHeader>신청날짜</TableHeader>
+              <TableHeader>신청시간</TableHeader>
+              <TableHeader>신청현황</TableHeader>
             </TableRow>
           </thead>
           <tbody>
