@@ -14,8 +14,6 @@ const Page = styled.div`
   width: 100%;
   max-width: 800px;
   padding: 0 20px;
-  left: 50%;
-  transform: translate(-49%, 0);
   background-color: #F7F7F7;
   overflow-y: auto;
   overflow-x: hidden;
@@ -79,15 +77,18 @@ const Input = styled.input`
 `;
 
 const BottomButtonWrap = styled.div`
-  position: fixed;
   bottom: 0;
   width: 100%;
   text-align: center;
   padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const BottomButton = styled.button`
-  width: 100%;
+  width: 70%;
   height: 48px;
   border: none;
   font-weight: 700;
@@ -96,7 +97,7 @@ const BottomButton = styled.button`
   color: white;
   margin-bottom: 16px;
   cursor: pointer;
-
+  font-size: 20px;
   &:disabled {
     background-color: #dadada;
     color: white;
@@ -113,8 +114,8 @@ const CreatorDetailsContainer = styled.div`
 `;
 
 const CreatorImage = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 240px;
   border-radius: 10px;
   object-fit: cover;
   margin-right: 20px;
