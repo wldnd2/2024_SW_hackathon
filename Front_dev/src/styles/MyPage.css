@@ -1,0 +1,122 @@
+.mypage-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.profile-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.profile-status {
+  font-size: 14px;
+  color: #999;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-list li {
+  margin: 15px 0;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.menu-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.main-content, .page {
+  flex: 1;
+  padding: 40px;
+}
+
+.inputTitle {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.inputWrap {
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.bio-textarea{
+  height: 200px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.errorMessageWrap {
+  color: red;
+  font-size: 14px;
+}
+
+.bottomButton {
+  background-color: #ffcc00;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.bottomButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.titleWrap {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h1{
+  margin-bottom: 30px;
+}
+
+.homepage-link {
+  color: blue;
+  text-decoration: underline;
+}
+
+
+.creator-image {
+  width: 100%; /* 이미지 너비 조정 */
+  max-width: 330px; /* 최대 너비 */
+  height: auto; /* 비율 유지 */
+  display: block;
+  margin: 20px auto; /* 가운데 정렬 */
+}
