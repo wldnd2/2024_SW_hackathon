@@ -155,7 +155,7 @@ const Header = () => {
       <AppBar position="fixed" sx={{ backgroundColor: '#fff', borderRadius: "0 0 15px 15px" }}>
         <Toolbar>
           <Link to="/">
-            <Logo src="https://www.daegu.go.kr/cmsh/daegu.go.kr/images/2023/common/logo_header_m.png" alt="Logo" />
+            <Logo src="https://postfiles.pstatic.net/MjAyNDA5MjJfMjA3/MDAxNzI2OTkxNTExNDY1.TfUkiC_otcrBtjbYTtCy0-K5ENptL8o9vK3B3rN9AMIg.-ugNOZD8qQAnwWoXEj1StwyyJ9fkyqEhfqc2ba0cstgg.PNG/%EC%A0%9C%EB%AA%A9%EC%9D%84-%EC%9E%85%EB%A0%A5%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94_-001.png?type=w773" alt="Logo" />
           </Link>
           <FlexGrowDiv />
           {/* 프로필 이미지와 사용자 이름 표시 */}
