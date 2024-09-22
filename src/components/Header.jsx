@@ -159,13 +159,13 @@ const Header = () => {
           </Link>
           <FlexGrowDiv />
           {/* 프로필 이미지와 사용자 이름 표시 */}
-          {user && (
+          {user && location.pathname !== '/login' &&  location.pathname !== '/signup' &&(
             <ProfileButton onClick={() => navigate('/mypage')}>
               <ProfileImage
                 src="https://img.freepik.com/free-psd/3d-rendering-avatar_23-2150833572.jpg"
                 alt="Profile"
               />
-              <UserName>{user.displayName || user.email} 님</UserName>
+              <UserName>{user.displayName} 님</UserName>
             </ProfileButton>
           )}
           <MenuIcon onClick={toggleDrawer(true)} sx={{ color: '#000' }} />
