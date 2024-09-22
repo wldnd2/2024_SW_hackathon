@@ -3,16 +3,33 @@ import '../styles/MyPage.css'; // 동일한 CSS 사용
 
 export default function StorePage() {
   const [name, setName] = useState('');
-  const [category] = useState('');
+  const [category, setCategory] = useState('');
   const [location, setLocation] = useState('');
   const [phoneN, setPhoneN] = useState('');
   const [email, setEmail] = useState('');
   const [notAllow, setNotAllow] = useState(true);
 
   const [nameValid, setNameValid] = useState(false);
-  // const [categoryValid, setCategoryValid] = useState(true); // Assuming category is valid
   const [phoneNValid, setPhoneNValid] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
+
+  // 로컬 스토리지에서 상점 정보를 불러오는 함수
+  useEffect(() => {
+    const storedInfo = localStorage.getItem('storeInfo');
+    if (storedInfo) {
+      const parsedInfo = JSON.parse(storedInfo);
+      setName(parsedInfo.name || '');
+      setCategory(parsedInfo.category || '');
+      setLocation(parsedInfo.location || '');
+      setPhoneN(parsedInfo.phoneN || '');
+      setEmail(parsedInfo.email || '');
+
+      // 유효성 검사도 함께 업데이트
+      setNameValid(parsedInfo.name ? true : false);
+      setPhoneNValid(parsedInfo.phoneN && /^(010|053)-\d{4}-\d{4}$/.test(parsedInfo.phoneN));
+      setEmailValid(parsedInfo.email && /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i.test(parsedInfo.email));
+    }
+  }, []);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -25,7 +42,7 @@ export default function StorePage() {
     setEmail(e.target.value);
     const regex =
       /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    setEmailValid(regex.test(email));
+    setEmailValid(regex.test(e.target.value));
   };
 
   const handlePhoneN = (e) => {
@@ -38,6 +55,19 @@ export default function StorePage() {
   useEffect(() => {
     setNotAllow(!(nameValid && emailValid && phoneNValid));
   }, [nameValid, emailValid, phoneNValid]);
+
+  const handleNextClick = () => {
+    const storeInfo = {
+      name,
+      category,
+      location,
+      phoneN,
+      email,
+    };
+    localStorage.setItem('storeInfo', JSON.stringify(storeInfo));
+    alert('상점 정보가 저장되었습니다!');
+    // 이후 페이지 이동 로직 추가 가능
+  };
 
   return (
     <div className="profile-form">
@@ -65,7 +95,7 @@ export default function StorePage() {
             className="input"
             placeholder="카테고리를 입력하세요"
             value={category}
-            readOnly
+            onChange={(e) => setCategory(e.target.value)} // 카테고리 입력 가능하게 수정
           />
         </div>
         <div className="inputTitle">상점 위치</div>
@@ -111,8 +141,9 @@ export default function StorePage() {
         <div>
           <button
             disabled={notAllow}
-            className="bottomButton">
-            다음
+            className="bottomButton"
+            onClick={handleNextClick}>
+            저장
           </button>
         </div>
       </div>
